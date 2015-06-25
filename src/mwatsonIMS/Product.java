@@ -6,21 +6,13 @@ public class Product {
 	private int ProductID;
 	private int ProductQty;
 	private String ProductName;
-	
-	public Product() {	
 		
-	}
-	
 	public Product(int ID, int Qty, String Name) {	
 		ProductID = ID;
 		ProductQty = Qty;
 		ProductName = Name;
 	}
-	
-	public Product(int ID) { 
-		ProductID = ID;
-	}
-		
+			
 	//Retrieves Product ID  
 	public int getProductID(){
 		return ProductID;
