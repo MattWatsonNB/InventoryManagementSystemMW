@@ -1,11 +1,19 @@
 package mwatsonIMS;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class IMS {
 
 	ArrayList<Product> allproducts = new ArrayList<Product>();
+	FileWriter writer = null;
+	DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	Date date = new Date();
 	
 	private int id;
 	private int qty;
@@ -13,6 +21,8 @@ public class IMS {
 	Scanner scan = new Scanner(System.in);
 	
 	public IMS() { 
+		
+		createProduct();
 		
 	}	
 	
@@ -46,14 +56,25 @@ public class IMS {
 		//If createanother is true the user another product can be created
 		} while(createanother == true );
 		
-		//Print out all products in array list
+		FileWriter writer = null;
+		
+		try {
+			writer = new FileWriter("output.txt");
+		
+		//Print out all products in array list and writes to txt file
 		for (Product p : allproducts) {
 			System.out.println(p.toString());
+			writer.write(String.format("%20s %20s %20s %20s \r\n", String.valueOf(p.getProductID()), p.getProductName(),String.valueOf(p.getProductQty()), dateformat.format(date)));  
+			}
+		writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	
 		
 	}
 
-	public void editProductStock(){
+	public void changeProductStock(){
 		
 		System.out.println("Enter Product ID ");
 		id = scan.nextInt();
@@ -75,4 +96,5 @@ public class IMS {
 		
 		System.out.println(allproducts.get(0).getProductID());
 	}
+	
 }
