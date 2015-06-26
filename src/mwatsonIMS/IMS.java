@@ -11,7 +11,8 @@ import java.io.IOException;
 public class IMS {
 
 	ArrayList<Product> allproducts = new ArrayList<Product>();
-	FileWriter writer = null;
+	FileWriter writer, writer2;
+	
 	DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	Date date = new Date();
 	
@@ -23,12 +24,21 @@ public class IMS {
 	public IMS() { 
 		
 		createProduct();
-		changeProductStock();
+		printProductList();
 	}	
 	
-	public void checkProductList() {
+	public void printProductList() {
+		
+		try {
+			writer2 = new FileWriter("hello.txt");
+			
 		for (Product p : allproducts) {
 			System.out.println(p.toString());
+			writer.write("%20s %20s %20s %20s \r\n", String.valueOf(p.getProductID()), p.getProductName(),String.valueOf(p.getProductQty()), dateformat.format(date)));
+		}
+		writer2.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 		
@@ -63,9 +73,7 @@ public class IMS {
 		} 
 		//If createanother is true the user another product can be created
 		} while(createanother == true );
-		
-		FileWriter writer = null;
-		
+			
 		try {
 			writer = new FileWriter("output.txt");
 		
