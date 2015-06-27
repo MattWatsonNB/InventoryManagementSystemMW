@@ -1,5 +1,6 @@
 package mwatsonIMS;
 
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,10 +22,9 @@ public class IMS {
 	private String name;
 
 	
-	public IMS() { 
+	public IMS() throws SQLException { 
 		
-		createProduct();
-		printProductList();
+		DatabaseConnector db = new DatabaseConnector();
 	}	
 	
 	public void printProductList() {
@@ -34,7 +34,7 @@ public class IMS {
 			
 		for (Product p : allproducts) {
 			System.out.println(p.toString());
-			writer.write("%20s %20s %20s %20s \r\n", String.valueOf(p.getProductID()), p.getProductName(),String.valueOf(p.getProductQty()), dateformat.format(date)));
+			writer2.write("%20s %20s %20s %20s \r\n");
 		}
 		writer2.close();
 		} catch (IOException e) {
