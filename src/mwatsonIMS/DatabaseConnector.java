@@ -105,7 +105,7 @@ public class DatabaseConnector  {
 		}
 	}
 	
-	public void getAllProducts() {
+	public void getAllProducts () {
 		try {
 		//Reading Data
 		ResultSet myRs;
@@ -126,5 +126,6 @@ public class DatabaseConnector  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 }

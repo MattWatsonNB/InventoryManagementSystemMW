@@ -6,7 +6,12 @@ public class IMSmain {
 
 	public static void main(String args[]) throws SQLException{
 		
-		IMS ims = new IMS();
+		try {
+			IMS ims = new IMS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }

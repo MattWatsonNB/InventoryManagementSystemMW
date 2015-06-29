@@ -24,7 +24,7 @@ public class IMS {
 	
 	public IMS() throws SQLException { 
 		
-		DatabaseConnector db = new DatabaseConnector();
+		GUI gui = new GUI();
 	}	
 	
 	public void printProductList() {
@@ -76,11 +76,11 @@ public class IMS {
 			
 		try {
 			writer = new FileWriter("output.txt");
-		
+			writer.write(String.format("%20s %20s %20s %20s \r\n", "Product ID", "Product Name","Product Qty", dateformat.format(date)));
 		//Print out all products in array list and writes to txt file
 		for (Product p : allproducts) {
 			System.out.println(p.toString());
-			writer.write(String.format("%20s %20s %20s %20s \r\n", String.valueOf(p.getProductID()), p.getProductName(),String.valueOf(p.getProductQty()), dateformat.format(date)));  
+			writer.write(String.format("%20s %20s %20s \r\n", String.valueOf(p.getProductID()), p.getProductName(),String.valueOf(p.getProductQty())));  
 			}
 		writer.close();
 		} catch (IOException e) {
