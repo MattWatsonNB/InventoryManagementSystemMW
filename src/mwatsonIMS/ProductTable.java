@@ -10,9 +10,10 @@ public class ProductTable extends AbstractTableModel {
 	private static final int ProductID_Col = 1;
 	private static final int ProductQty_Col = 2;
 	private static final int ProductMinQty_Col = 3;
+	private static final int ProductMaxQty_Col = 4;
 	
 	private ArrayList<Product> Products;
-	private String[] columns = {"Product Name" , "Product ID" , "Product Quantity", "Minimum Quantity"};
+	private String[] columns = {"Product Name" , "Product ID" , "Product Quantity", "Minimum Quantity", "Maximum Quantity"};
 	
 	public ProductTable(ArrayList<Product> ProductList) {
 		Products = ProductList;
@@ -43,6 +44,7 @@ public class ProductTable extends AbstractTableModel {
 		case ProductID_Col: return product.getProductID();
 		case ProductQty_Col: return product.getProductQty();
 		case ProductMinQty_Col: return product.getProductMinQty();
+		case ProductMaxQty_Col: return product.getProductMaxQty();
 		default: return product.getProductName();
 		}
 	}

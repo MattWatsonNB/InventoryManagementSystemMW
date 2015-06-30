@@ -15,11 +15,7 @@ public class IMSConnector {
 	String url = "jdbc:mysql://localhost:3306/ims" ;
 	String user = "root";
 	String password = "netbuilder1:";
-	Connection myConn = null;
-	
-
-	
-	
+	Connection myConn = null;	
 
 	public IMSConnector() throws Exception {
 		
@@ -37,12 +33,15 @@ public class IMSConnector {
 	}
 	
 	public ArrayList<Product> getAllProducts() throws Exception {
-	
-	
+		
 		Statement myStmt = null;
 		ResultSet myRs  = null;
 		ArrayList<Product> allproducts = new ArrayList<Product>();
 				
+		if (myConn != null) {
+			myConn = DriverManager.getConnection(url, user, password);
+		}
+		
 		try {
 			myStmt = myConn.createStatement();
 			myRs = myStmt.executeQuery("select * from product");
@@ -50,13 +49,14 @@ public class IMSConnector {
 			while(myRs.next()) {
 				
 				System.out.println(myRs.getString("ProductName") +  ", " + myRs.getString("ProductID") 
-									+ ", " + myRs.getString("ProductQTY") + ", " + myRs.getString("MinQty") );
+									+ ", " + myRs.getString("ProductQTY") + ", " + myRs.getString("MinQty") + ", " + myRs.getString("MaxQty"));
 				
 				int PID = myRs.getInt("ProductID");
 				int PQ = myRs.getInt("ProductQTY");
-				int MQ = myRs.getInt("MinQty");
+				int MinQ = myRs.getInt("MinQty");
+				int MaxQ = myRs.getInt("MaxQty");
 				String PN = myRs.getString("ProductName");
-				allproducts.add(new Product(PID, PQ, PN, MQ));
+				allproducts.add(new Product(PID, PQ, PN, MinQ, MaxQ));
 			}
 			
 			
@@ -64,7 +64,7 @@ public class IMSConnector {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} /*finally {
+		} finally {
 			try{
 				if (myStmt != null){
 					myConn.close();
@@ -80,7 +80,7 @@ public class IMSConnector {
 				se.printStackTrace();
 			}
 			System.out.println("Goodbye");
-		}*/
+		}
 		return allproducts; 
 		
 		
@@ -88,6 +88,15 @@ public class IMSConnector {
 	
 	public void updateProductQty(int Qty, int ID) {
 		PreparedStatement myStmt = null;
+		
+		if (myConn != null) {
+			try {
+				myConn = DriverManager.getConnection(url, user, password);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 			try {
 			//Create Statement 
@@ -106,7 +115,7 @@ public class IMSConnector {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} /*finally {
+			} finally {
 				try{
 				if (myStmt != null){
 					myConn.close();
@@ -122,7 +131,7 @@ public class IMSConnector {
 				se.printStackTrace();
 			}
 				
-			}*/
+			}
 			//System.out.println("Goodbye");
 		}
 		
