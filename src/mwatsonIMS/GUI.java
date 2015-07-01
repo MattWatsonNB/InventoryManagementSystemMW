@@ -1,21 +1,24 @@
 package mwatsonIMS;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,11 +32,13 @@ public class GUI implements ActionListener {
 	private JButton bUpdateQty;
 	private JTextField updateText;
 	private JTextArea minQtyText;
-	private JButton bupdateMinQtyText;
+	//private JButton bupdateMinQtyText;
 	private JButton bPrintStockReport;
-	private JButton bPrintPurchaseOrder; 
-	
-	
+	private JButton bPrintPurchaseOrder;
+	private JButton baddUpdate;
+	private ProductTable model;
+
+	private JDialog updateDialog;
 	private IMSConnector IMSConnector;
 	
 	public GUI(){
@@ -44,15 +49,44 @@ public class GUI implements ActionListener {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+		JFrame mainframe = new JFrame("Inventory Management System");
 		JPanel outerPanel = new JPanel(new BorderLayout());
 		JPanel topPanel = new JPanel(new BorderLayout());
 		JPanel bottomPanel = new JPanel(new BorderLayout());
 		JPanel sidePanel = new JPanel(new BorderLayout());
+		JPanel sideUpdatePanel = new JPanel(new BorderLayout());
+	
+		
+
 		
 		minQtyText = new JTextArea();
 		minQtyText.setEditable(false);
 		ProductList = new JTable();
+		ProductList.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+         public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+            	
+             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+             Color lightRed = new Color(250,128,114);
+             int Qty = (int) table.getModel().getValueAt(row, 2);
+             int MinQty = (int) table.getModel().getValueAt(row, 3);
+             if ( Qty < MinQty) {   
+            	 for (int i = 0; i < 5; i++  ) { 
+            	 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, i);
+                 setBackground(lightRed);    
+            	 }
+          
+             } else {                 
+                 setBackground(table.getBackground()); 
+             }       
+             return this;
+         }   
+     });
+		
+		
 		updateText = new JTextField();
 		JScrollPane jScrlP = new JScrollPane(ProductList);
 		JScrollPane textScroll = new JScrollPane(minQtyText);
@@ -62,13 +96,16 @@ public class GUI implements ActionListener {
 		
 		topPanel.setPreferredSize(new Dimension(700, 20));
 		//arraytable();
-		
-		
 		bUpdateQty = new JButton("Update Product Quantity");
+		updateDialog = new JDialog();
+		updateDialog.setLayout(new FlowLayout());
+		updateDialog.setLocation(550,400);
+		updateDialog.setTitle("Update");
+		updateDialog.add(bUpdateQty);
+
 		bUpdateQty.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 
-				
+					
 				int ProductQty = 0;
 				
 				int row = ProductList.getSelectedRow();
@@ -116,10 +153,41 @@ public class GUI implements ActionListener {
 			}
 		});
 		
-		
+		baddUpdate = new JButton("Add New Stock");
+		baddUpdate.addActionListener(new ActionListener () {
+			public void actionPerformed(ActionEvent e) {
+				
+				String name;
+				int Qty;
+				int MinQty;
+				int MaxQty;
+				
+			try {
+					
+				name = JOptionPane.showInputDialog(mainframe, "Enter Product Name: " , null);
+
+				Qty = Integer.parseInt(JOptionPane.showInputDialog(mainframe, "Enter Product Qty: " , null));
+				MinQty = Integer.parseInt(JOptionPane.showInputDialog(mainframe, "Enter Minimum Stock Allowed: " , null));
+				MaxQty = Integer.parseInt(JOptionPane.showInputDialog(mainframe, "Enter Maximum Stock: " , null));
+				
+				IMSConnector.addProduct(name, Qty, MinQty, MaxQty);
+				arrayListupdate();
+			} catch (Exception exc) {
+				return;
+			}
+			}
+		});
+				
 		bPrintStockReport = new JButton("Print Stock Report	");
 		bPrintStockReport .addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					
+					
+					
+					
+					
+					
+					
 					
 					DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 					Date date = new Date();
@@ -148,7 +216,7 @@ public class GUI implements ActionListener {
 			
 			}});
 		
-		bupdateMinQtyText = new JButton("Show products under minimum stock");
+		/*bupdateMinQtyText = new JButton("Show products under minimum stock");
 		bupdateMinQtyText.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -162,24 +230,28 @@ public class GUI implements ActionListener {
 				}
 				
 				minQtyText.setText(null);
+				minQtyText.append("Product too low: " + "Current Quantity: " + "Minimum Quantity: " + "\n" + "\n" );
 				int row = -1;
 				for (Product p : allproducts) {
 					
 					row += 1;
 					System.out.println("i : " + row);
+					System.out.println("Product:" + p.getProductName()  + ", Current Quantity: " + p.getProductQty() + ", Minimum Quantity: " + p.getProductMinQty() );
+					
+					
 					
 					if (p.getProductMinQty() > p.getProductQty()) {
-						System.out.println("Product too low: " + p.getProductName()  + ", Current Quantity: " + p.getProductQty() + ", Minimum Quantity: " + p.getProductMinQty() );
+						
 						//System.out.println("New quantity for Product ID: " + id + " Quantity: " + qty);	
 						
 						
-						minQtyText.append("Product: " + p.getProductName() + "\n" + "Current Quantity: " + p.getProductQty() + "\n" + "Minimum Quantity: " + p.getProductMinQty() + "\n" + "\n");
+						minQtyText.append(p.getProductName() +  p.getProductQty() + p.getProductMinQty()  + "\n");
 						
 						} else {							
 						}
 				}
 			}			
-		});
+		});*/
 		
 		bPrintPurchaseOrder = new JButton("Print Purchase Order");
 		bPrintPurchaseOrder.addActionListener(new ActionListener ()  {
@@ -187,7 +259,7 @@ public class GUI implements ActionListener {
 				
 				DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				Date date = new Date();
-				FileWriter writer ;
+				FileWriter writer ;	
 				ArrayList<Product> allproducts = new ArrayList<Product>();
 				try {
 					allproducts = IMSConnector.getAllProducts();
@@ -218,18 +290,20 @@ public class GUI implements ActionListener {
 			}
 		});
 		
-		bottomPanel.add(bUpdateQty,BorderLayout.LINE_END);
-		bottomPanel.add(updateText,BorderLayout.CENTER);
-		bottomPanel.add(bPrintStockReport, BorderLayout.BEFORE_LINE_BEGINS);
-		sidePanel.add(bupdateMinQtyText, BorderLayout.PAGE_START);
-		sidePanel.add(textScroll, BorderLayout.CENTER);
+		bottomPanel.add(bPrintStockReport,BorderLayout.LINE_END);
+		sideUpdatePanel.add(updateText,BorderLayout.PAGE_END);
+		sideUpdatePanel.add(bUpdateQty,BorderLayout.PAGE_START);
+		//sidePanel.add(bupdateMinQtyText, BorderLayout.PAGE_START);
+		//sidePanel.add(textScroll, BorderLayout.CENTER);
+		sidePanel.add(baddUpdate, BorderLayout.CENTER);
 		sidePanel.add(bPrintPurchaseOrder, BorderLayout.PAGE_END);
+		sidePanel.add(sideUpdatePanel, BorderLayout.PAGE_START);
 		outerPanel.add(jScrlP, BorderLayout.CENTER);
 		outerPanel.add(topPanel, BorderLayout.BEFORE_FIRST_LINE);
 		outerPanel.add(bottomPanel, BorderLayout.PAGE_END);
 		outerPanel.add(sidePanel, BorderLayout.LINE_END);
 		
-		JFrame mainframe = new JFrame("Inventory Management System");
+		
 		mainframe.add(outerPanel);
 		
 		mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -248,7 +322,7 @@ public class GUI implements ActionListener {
 			
 			product2 = IMSConnector.getAllProducts();
 			
-			ProductTable model = new ProductTable(product2);
+			model = new ProductTable(product2);
 			
 			ProductList.setModel(model);
 			

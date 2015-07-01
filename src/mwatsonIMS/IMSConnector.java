@@ -101,14 +101,18 @@ public class IMSConnector {
 			try {
 			//Create Statement 
 				
-			myStmt = myConn.prepareStatement( "update product" 
+				
+			String sql = "update product" 
 					+ " set ProductQty = ? "
-					+ " where ProductID = ?");
+					+ " where ProductID = ?";
+			myStmt = myConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS );
 		
 			myStmt.setLong(1, Qty);
 			myStmt.setLong(2, ID);
 			
 			myStmt.executeUpdate();
+			
+
 		
 			System.out.println("Update Complete");
 			
@@ -134,6 +138,55 @@ public class IMSConnector {
 			}
 			//System.out.println("Goodbye");
 		}
+	
+	public void addProduct(String Name, int Qty, int MinQty, int MaxQty) {
+		PreparedStatement myStmt = null;
+		
+		if (myConn != null) {
+			try {
+				myConn = DriverManager.getConnection(url, user, password);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			try {
+			//Create Statement 
+			//	System.out.println("Connecting");
+			myStmt = myConn.prepareStatement( "INSERT into product(ProductName, ProductQTY, MinQty, MaxQty)" + " VALUES (?, ?, ?, ?)");
+		
+			myStmt.setString(1, Name);
+			myStmt.setInt(2, Qty);
+			myStmt.setInt(3, MinQty);
+			myStmt.setInt(4, MaxQty);
+			
+			myStmt.executeUpdate();
+		
+			System.out.println("Row Added");
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try{
+				if (myStmt != null){
+					myConn.close();
+				}
+			} catch (SQLException se) {
+			}
+			
+			try {
+				if (myConn != null) {
+					myConn.close();
+				}
+			} catch (SQLException se ) {
+				se.printStackTrace();
+			}
+				
+			}
+			//System.out.println("Goodbye");
+	}
 		
 	public void printProductList() {
 			

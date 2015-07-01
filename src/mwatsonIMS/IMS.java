@@ -58,7 +58,7 @@ public class IMS {
 		System.out.println("What is the Product Name?");
 		name = scan.next();
 			
-		allproducts.add(new Product(id, qty, name));
+		//allproducts.add(new Product(id, qty, name));
 		System.out.println("Do you want to add another? y/n ");
 		char response = scan.next().charAt(0);
 		
