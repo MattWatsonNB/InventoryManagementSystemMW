@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class IMSConnector {
 	
-	String url = "jdbc:mysql://localhost:3306/ims" ;
+	String url = "jdbc:mysql://10.50.15.26:3306/ims" ;
 	String user = "root";
 	String password = "netbuilder1:";
 	Connection myConn = null;	

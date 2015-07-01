@@ -49,16 +49,14 @@ public class GUI implements ActionListener {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 		JFrame mainframe = new JFrame("Inventory Management System");
 		JPanel outerPanel = new JPanel(new BorderLayout());
 		JPanel topPanel = new JPanel(new BorderLayout());
 		JPanel bottomPanel = new JPanel(new BorderLayout());
 		JPanel sidePanel = new JPanel(new BorderLayout());
 		JPanel sideUpdatePanel = new JPanel(new BorderLayout());
-	
-		
-
-		
+			
 		minQtyText = new JTextArea();
 		minQtyText.setEditable(false);
 		ProductList = new JTable();

@@ -23,7 +23,7 @@ public class IMS {
 
 	
 	public IMS() throws SQLException { 
-		System.out.print("Hello!");
+		System.out.print("Hello!" + "\n");
 		GUI gui = new GUI();
 	}	
 	
