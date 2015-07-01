@@ -112,7 +112,7 @@ public class GUI implements ActionListener {
 				
 				//row needs to be selected
 				if (row < 0 ) {
-					JOptionPane.showMessageDialog(mainframe, GUI.this, "You must select a product" , JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, GUI.this, "You must select a product" , JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
