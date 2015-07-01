@@ -123,7 +123,7 @@ public class GUI implements ActionListener {
 				System.out.println(ProductQty);
 				
 				} catch (Exception exc) {
-					JOptionPane.showMessageDialog(mainframe, GUI.this, "Needs to be an Integer" , JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, GUI.this, "Needs to be an Integer" , JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
@@ -134,7 +134,7 @@ public class GUI implements ActionListener {
 				if (ProductQty <= 100){ 
 					
 				}else {
-					JOptionPane.showMessageDialog(mainframe, GUI.this, "Number to large. Less or equal than 100" , JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, GUI.this, "Number to large. Less or equal than 100" , JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				Product product = (Product) ProductList.getValueAt(row , ProductTable.Object_Col);
@@ -164,11 +164,11 @@ public class GUI implements ActionListener {
 				
 			try {
 					
-				name = JOptionPane.showInputDialog(mainframe, "Enter Product Name: " , null);
+				name = JOptionPane.showInputDialog(null, "Enter Product Name: " , null);
 
-				Qty = Integer.parseInt(JOptionPane.showInputDialog(mainframe, "Enter Product Qty: " , null));
-				MinQty = Integer.parseInt(JOptionPane.showInputDialog(mainframe, "Enter Minimum Stock Allowed: " , null));
-				MaxQty = Integer.parseInt(JOptionPane.showInputDialog(mainframe, "Enter Maximum Stock: " , null));
+				Qty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Product Qty: " , null));
+				MinQty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Minimum Stock Allowed: " , null));
+				MaxQty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Maximum Stock: " , null));
 				
 				IMSConnector.addProduct(name, Qty, MinQty, MaxQty);
 				arrayListupdate();
