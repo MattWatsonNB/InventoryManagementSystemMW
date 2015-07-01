@@ -112,7 +112,7 @@ public class GUI implements ActionListener {
 				
 				//row needs to be selected
 				if (row < 0 ) {
-					JOptionPane.showMessageDialog(jScrlP, GUI.this, "You must select a product" , JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(mainframe, GUI.this, "You must select a product" , JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
@@ -123,7 +123,7 @@ public class GUI implements ActionListener {
 				System.out.println(ProductQty);
 				
 				} catch (Exception exc) {
-					JOptionPane.showMessageDialog(jScrlP, GUI.this, "Needs to be an Integer" , JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(mainframe, GUI.this, "Needs to be an Integer" , JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
@@ -134,7 +134,7 @@ public class GUI implements ActionListener {
 				if (ProductQty <= 100){ 
 					
 				}else {
-					JOptionPane.showMessageDialog(jScrlP, GUI.this, "Number to large. Less or equal than 100" , JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(mainframe, GUI.this, "Number to large. Less or equal than 100" , JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				Product product = (Product) ProductList.getValueAt(row , ProductTable.Object_Col);
