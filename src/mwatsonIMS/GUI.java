@@ -215,7 +215,7 @@ public class GUI implements ActionListener {
 						exc.printStackTrace();
 					}
 			
-					JOptionPane.showMessageDialog(mainframe, "Stock report printed. ");
+					JOptionPane.showMessageDialog(null, "Stock report printed. ");
 			}});
 		
 		/*bupdateMinQtyText = new JButton("Show products under minimum stock");
@@ -288,7 +288,7 @@ public class GUI implements ActionListener {
 				} catch (Exception exc) {
 					exc.printStackTrace();
 				}
-				JOptionPane.showMessageDialog(mainframe, "Product Order created. " );	
+				JOptionPane.showMessageDialog(null, "Product Order created. " );	
 			}
 		});
 		
