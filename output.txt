@@ -1,7 +1,8 @@
-          Product ID         Product Name          Product Qty  2015/06/30 17:39:57 
-                   3          Angry Gnome                   20 
-                   4            DeckChair                   13 
-                   5         Arnold Gnome                   32 
-                  30                 home                   12 
-                  31                 matt                   12 
-                  32                    i                   12 
+          Product ID         Product Name          Product Qty  2015/07/01 21:43:58 
+                   1                Gnome                    0 
+                  12         Arnold Gnome                   13 
+                  13      Justin B. Gnome                    2 
+                  14           Deck Chair                   12 
+                  15          Angry Gnome                   10 
+                  16         Garden Gnome                    4 
+                  17          Jones Gnome                   10 

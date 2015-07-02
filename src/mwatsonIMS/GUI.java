@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
@@ -58,8 +59,11 @@ public class GUI implements ActionListener {
 		JPanel sideUpdatePanel = new JPanel(new BorderLayout());
 			
 		minQtyText = new JTextArea();
+		
 		minQtyText.setEditable(false);
 		ProductList = new JTable();
+		ProductList.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		ProductList.setRowHeight(20);
 		ProductList.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
 
             private static final long serialVersionUID = 1L;
@@ -211,7 +215,7 @@ public class GUI implements ActionListener {
 						exc.printStackTrace();
 					}
 			
-			
+					JOptionPane.showMessageDialog(mainframe, "Stock report printed. ");
 			}});
 		
 		/*bupdateMinQtyText = new JButton("Show products under minimum stock");
@@ -284,16 +288,16 @@ public class GUI implements ActionListener {
 				} catch (Exception exc) {
 					exc.printStackTrace();
 				}
-				
+				JOptionPane.showMessageDialog(mainframe, "Product Order created. " );	
 			}
 		});
 		
 		bottomPanel.add(bPrintStockReport,BorderLayout.LINE_END);
 		sideUpdatePanel.add(updateText,BorderLayout.PAGE_END);
-		sideUpdatePanel.add(bUpdateQty,BorderLayout.PAGE_START);
+		sideUpdatePanel.add(bUpdateQty,BorderLayout.CENTER);
 		//sidePanel.add(bupdateMinQtyText, BorderLayout.PAGE_START);
 		//sidePanel.add(textScroll, BorderLayout.CENTER);
-		sidePanel.add(baddUpdate, BorderLayout.CENTER);
+		sideUpdatePanel.add(baddUpdate, BorderLayout.PAGE_START);
 		sidePanel.add(bPrintPurchaseOrder, BorderLayout.PAGE_END);
 		sidePanel.add(sideUpdatePanel, BorderLayout.PAGE_START);
 		outerPanel.add(jScrlP, BorderLayout.CENTER);
@@ -306,7 +310,6 @@ public class GUI implements ActionListener {
 		
 		mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainframe.setSize(900, 600);
-		mainframe.setResizable(false);
 		mainframe.setVisible(true);
 		
 	}
