@@ -1,7 +1,11 @@
 package mwatsonIMS;
 
+import javax.swing.Box;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -9,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import java.awt.BorderLayout;
@@ -19,16 +24,22 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.FileWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
+/**This class is used to create the GUI. This includes all buttons 
+ * 
+ * @author mwatson
+ *
+ */
 
 public class GUI implements ActionListener {
 
+	private JMenuBar mainMenuBar;
 	private JTable ProductList;
 	private JButton bUpdateQty;
 	private JTextField updateText;
@@ -50,14 +61,86 @@ public class GUI implements ActionListener {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+
 		
 		JFrame mainframe = new JFrame("Inventory Management System");
 		JPanel outerPanel = new JPanel(new BorderLayout());
-		JPanel topPanel = new JPanel(new BorderLayout());
+		JPanel topPanel = new JPanel();
 		JPanel bottomPanel = new JPanel(new BorderLayout());
 		JPanel sidePanel = new JPanel(new BorderLayout());
 		JPanel sideUpdatePanel = new JPanel(new BorderLayout());
-			
+		
+		//Menu Bar
+		mainMenuBar = new JMenuBar();
+		
+		//Main Menu - File
+		JMenu menuFile = new JMenu("File");
+		menuFile.setMnemonic(KeyEvent.VK_A);
+		menuFile.getAccessibleContext().setAccessibleDescription("File");
+		mainMenuBar.add(menuFile);
+		
+		//Group of JMenuItems
+		//New Product
+		JMenuItem menuItemNew = new JMenuItem("New");
+		menuItemNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+		menuFile.add(menuItemNew);
+		
+		//Print
+		menuFile.addSeparator();
+		JMenu printSubMenu = new JMenu("Print");
+		printSubMenu.setMnemonic(KeyEvent.VK_P);		
+		
+		JMenuItem printStockReport = new JMenuItem("Stock Report");
+		printSubMenu.add(printStockReport);
+		
+		JMenuItem printProductOrder = new JMenuItem("Product Order");
+		printSubMenu.add(printProductOrder);
+		menuFile.add(printSubMenu);
+		
+		//Exit
+		JMenuItem menuItemExit = new JMenuItem("Exit");
+		menuItemExit .setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
+		menuFile.add(menuItemExit );
+		
+		
+		//MainMenu 
+		JMenu menuEdit = new JMenu("Edit");
+		menuEdit.setMnemonic(KeyEvent.VK_A);
+		menuEdit.getAccessibleContext().setAccessibleDescription("File");
+		mainMenuBar.add(menuEdit);
+		
+		//Group of JMenuItems
+		//New Product
+		JMenuItem menuItemEdit = new JMenuItem("Update");
+		menuItemEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+		menuEdit.add(menuItemEdit);
+		
+		//Exit
+		JMenuItem menuItemDelete = new JMenuItem("Delete");
+		menuItemDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
+		menuEdit.add(menuItemDelete);
+	
+		//MainMenu  - Help
+		JMenu menuHelp = new JMenu("Help");
+		menuHelp.setMnemonic(KeyEvent.VK_A);
+		menuHelp.getAccessibleContext().setAccessibleDescription("Help");
+		mainMenuBar.add(menuHelp);
+		
+		//Overview
+		JMenuItem menuItemOverview = new JMenuItem("Overview");
+		menuItemOverview.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+		menuHelp.add(menuItemOverview);	
+		
+		//Key Assist
+		JMenuItem menuItemKeyAssist = new JMenuItem("Key Assist");
+		menuItemKeyAssist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K, ActionEvent.CTRL_MASK));
+		menuHelp.add(menuItemKeyAssist);		
+		
+		//About
+		JMenuItem menuItemAbout = new JMenuItem("About");
+		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
+		menuHelp.add(menuItemAbout);			
+		
 		minQtyText = new JTextArea();
 		
 		minQtyText.setEditable(false);
@@ -179,17 +262,10 @@ public class GUI implements ActionListener {
 			}
 			}
 		});
-				
+			//Print Stock - Button
 		bPrintStockReport = new JButton("Print Stock Report	");
 		bPrintStockReport .addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
-					
-					
-					
-					
-					
-					
 					
 					DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 					Date date = new Date();
@@ -201,7 +277,6 @@ public class GUI implements ActionListener {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					
 					try {
 						writer = new FileWriter("output.txt");
 						writer.write(String.format("%20s %20s %20s %20s \r\n", "Product ID", "Product Name","Product Qty", dateformat.format(date)));
@@ -308,6 +383,7 @@ public class GUI implements ActionListener {
 		
 		mainframe.add(outerPanel);
 		
+		mainframe.setJMenuBar(mainMenuBar);
 		mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainframe.setSize(900, 600);
 		mainframe.setVisible(true);
@@ -336,7 +412,7 @@ public class GUI implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

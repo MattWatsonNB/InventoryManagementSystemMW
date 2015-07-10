@@ -12,11 +12,17 @@ import java.util.ArrayList;
 
 public class IMSConnector {
 	
-	String url = "jdbc:mysql://10.50.15.26:3306/ims" ;
-	String user = "mwatson";
+	
+	//Create and Declares the url, user and password needed to connect up to the mySQL database
+	String url = "jdbc:mysql://localhost:3306/ims" ;
+	String user = "root";
 	String password = "netbuilder1:";
+	
+	//Initial connection will be null
 	Connection myConn = null;	
 
+	
+	//Constructor - 
 	public IMSConnector() throws Exception {
 		
 		try { 
@@ -49,7 +55,7 @@ public class IMSConnector {
 			while(myRs.next()) {
 				
 				System.out.println(myRs.getString("ProductName") +  ", " + myRs.getString("ProductID") 
-									+ ", " + myRs.getString("ProductQTY") + ", " + myRs.getString("MinQty") + ", " + myRs.getString("MaxQty"));
+									+ ", " + myRs.getString("ProductQty") + ", " + myRs.getString("MinQty") + ", " + myRs.getString("MaxQty"));
 				
 				int PID = myRs.getInt("ProductID");
 				int PQ = myRs.getInt("ProductQTY");

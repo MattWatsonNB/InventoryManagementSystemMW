@@ -9,6 +9,8 @@ public class Product {
 	private int ProductMaxQty;
 	private String ProductName;
 		
+	
+	//When the product is created, each instance is passed all of these values in the constructor
 	public Product(int ID, int Qty, String Name, int MinQty, int MaxQty) {	
 		ProductID = ID;
 		ProductQty = Qty;
@@ -53,10 +55,12 @@ public class Product {
 		this.ProductQty = ProductQty;
 	}
 	
+	//Setting Minimum Quantity of the Product
 	public void setProductMinQty(int ProductMinQty) {
 		this.ProductMinQty = ProductMinQty;
 	}
 	
+	//Setting Maximum Quantity of the Product 
 	public void setProductMaxQty(int ProductMaxQty) {
 		this.ProductMaxQty = ProductMaxQty;
 	}
@@ -66,6 +70,8 @@ public class Product {
 		this.ProductName = ProductName;
 	}
 
+	
+	//Overrides the toString method and will convert all the product values to a string
 	@Override
 	public String toString() {
 		return "Product [ProductID=" + ProductID + ", ProductQty=" + ProductQty
