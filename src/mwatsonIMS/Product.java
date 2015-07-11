@@ -22,6 +22,7 @@ public class Product {
 			
 	//Retrieves Product ID  
 	public int getProductID(){
+		System.out.println("ProductID");
 		return ProductID;
 	}
 	
@@ -52,6 +53,7 @@ public class Product {
 	
 	//Setting Product Quantity
 	public void setProductQty(int ProductQty) {
+		System.out.println(ProductQty + " Product Class");
 		this.ProductQty = ProductQty;
 	}
 	

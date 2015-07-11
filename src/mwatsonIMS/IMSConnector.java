@@ -92,6 +92,59 @@ public class IMSConnector {
 		
 	}
 	
+	public void updateProductName(String Name, int ID) {
+		PreparedStatement myStmt = null;
+		
+		if (myConn != null) {
+			try {
+				myConn = DriverManager.getConnection(url, user, password);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+			try {
+			//Create Statement 
+				
+				
+			String sql = "update product" 
+					+ " set ProductName = ? "
+					+ " where ProductID = ?";
+			myStmt = myConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS );
+		
+			myStmt.setString(1, Name);
+			myStmt.setLong(2, ID);
+			
+			myStmt.executeUpdate();
+			
+
+		
+			System.out.println("Qty Update Complete");
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try{
+				if (myStmt != null){
+					myConn.close();
+				}
+			} catch (SQLException se) {
+			}
+			
+			try {
+				if (myConn != null) {
+					myConn.close();
+				}
+			} catch (SQLException se ) {
+				se.printStackTrace();
+			}
+				
+			}
+			//System.out.println("Goodbye");
+		}
+	
 	public void updateProductQty(int Qty, int ID) {
 		PreparedStatement myStmt = null;
 		
@@ -120,7 +173,168 @@ public class IMSConnector {
 			
 
 		
-			System.out.println("Update Complete");
+			System.out.println("Qty Update Complete");
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try{
+				if (myStmt != null){
+					myConn.close();
+				}
+			} catch (SQLException se) {
+			}
+			
+			try {
+				if (myConn != null) {
+					myConn.close();
+				}
+			} catch (SQLException se ) {
+				se.printStackTrace();
+			}
+				
+			}
+			//System.out.println("Goodbye");
+		}
+	
+	public void updateProductMinQty(int MinQty, int ID) {
+		PreparedStatement myStmt = null;
+		
+		if (myConn != null) {
+			try {
+				myConn = DriverManager.getConnection(url, user, password);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+			try {
+			//Create Statement 
+				
+			System.out.println("create statement");	
+			String sql = "update product" 
+					+ " set MinQty = ? "
+					+ " where ProductID = ?";
+			myStmt = myConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS );
+		
+			myStmt.setLong(1, MinQty);
+			myStmt.setLong(2, ID);
+			
+			myStmt.executeUpdate();
+			
+
+		
+			System.out.println("Min Qty Update Complete");
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try{
+				if (myStmt != null){
+					myConn.close();
+				}
+			} catch (SQLException se) {
+			}
+			
+			try {
+				if (myConn != null) {
+					myConn.close();
+				}
+			} catch (SQLException se ) {
+				se.printStackTrace();
+			}
+				
+			}
+			//System.out.println("Goodbye");
+		}
+
+	public void updateProductMaxQty(int MaxQty, int ID) {
+		PreparedStatement myStmt = null;
+		
+		if (myConn != null) {
+			try {
+				myConn = DriverManager.getConnection(url, user, password);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+			try {
+			//Create Statement 
+				
+			System.out.println("create statement");	
+			String sql = "update product" 
+					+ " set MaxQty = ? "
+					+ " where ProductID = ?";
+			myStmt = myConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS );
+		
+			myStmt.setLong(1, MaxQty);
+			myStmt.setLong(2, ID);
+			
+			myStmt.executeUpdate();
+			
+
+		
+			System.out.println("Max Qty Update Complete");
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try{
+				if (myStmt != null){
+					myConn.close();
+				}
+			} catch (SQLException se) {
+			}
+			
+			try {
+				if (myConn != null) {
+					myConn.close();
+				}
+			} catch (SQLException se ) {
+				se.printStackTrace();
+			}
+				
+			}
+			//System.out.println("Goodbye");
+		}
+
+	
+	public void deleteProductQty(int ID) {
+		
+		
+		PreparedStatement myStmt = null;
+		
+		if (myConn != null) {
+			try {
+				myConn = DriverManager.getConnection(url, user, password);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("Before Create Statment Try-Catch");	
+		
+			try {
+			//Create Statement 
+			System.out.println("Create Statment");	
+			System.out.println(ID + "IMSConn");
+			String sql = "DELETE FROM product" 
+					+ " where ProductID = ?";
+			myStmt = myConn.prepareStatement(sql);
+		
+			myStmt.setLong(1, ID);
+			
+			myStmt.executeUpdate();
+			
+
+		
+			System.out.println("Deletion Complete");
 			
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

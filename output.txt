@@ -1,8 +1,10 @@
-          Product ID         Product Name          Product Qty  2015/07/01 21:43:58 
-                   1                Gnome                    0 
+          Product ID         Product Name          Product Qty  2015/07/11 17:13:24 
+                   1                Gnome                   11 
                   12         Arnold Gnome                   13 
                   13      Justin B. Gnome                    2 
                   14           Deck Chair                   12 
                   15          Angry Gnome                   10 
                   16         Garden Gnome                    4 
                   17          Jones Gnome                   10 
+                  18    Hello Kitty Gnome                   20 
+                  19      King Kong Gnome                    5 

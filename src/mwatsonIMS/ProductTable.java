@@ -6,6 +6,10 @@ import javax.swing.table.AbstractTableModel;
 public class ProductTable extends AbstractTableModel {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//Initialising and declaring each column variables
 	public static final int Object_Col = -1;
 	private static final int ProductName_Col = 0;
@@ -60,5 +64,59 @@ public class ProductTable extends AbstractTableModel {
 	public Class getColumnClass (int c) {
 		return getValueAt(0, c).getClass();
 	}
+	/*
+	public boolean isCellEditable(int row, int col) {
+		switch(col) {
+			case 0:
+				return true;
+			case 1: 
+				return false;
+			case 2: 
+				return true;
+			case 3:
+				return true;
+			case 4:
+				return true;
+			default: 
+				return false;
+		}
+		
+	}
 	
+	public void setValueAt(Object value, int row, int col) {
+		
+		
+		Product product = Products.get(row);
+		
+		switch (col) {
+			case 0:
+				System.out.println(value);
+				product.setProductName((String)value);
+				fireTableCellUpdated(row, col);
+				fireTableDataChanged();
+				break;
+			case 2:
+				System.out.println(value);
+				product.setProductQty(Integer.parseInt(value.toString()));
+				fireTableCellUpdated(row, col);
+				fireTableDataChanged();
+				break;
+			case 3: 
+				System.out.println(value);
+				product.setProductMinQty((int)value);
+				fireTableCellUpdated(row, col);
+				break;
+			case 4:
+				System.out.println(value);
+				product.setProductMaxQty((int)value);
+				fireTableCellUpdated(row, col);
+				break;
+			default: 
+				System.out.println(value);
+				break;
+		}
+		
+		
+	}
+	*/
 }
