@@ -39,7 +39,7 @@ import java.util.Date;
  *
  */
 
-public class GUI  {
+public class GUI {
 
 	private JMenuBar mainMenuBar;
 	private JTable ProductList;
@@ -55,7 +55,7 @@ public class GUI  {
 	private JDialog updateDialog;
 	private IMSConnector IMSConnector;
 	
-	public GUI(){
+	public GUI() {
 		
 		try {
 			IMSConnector = new IMSConnector();
@@ -206,7 +206,6 @@ public class GUI  {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				int selectedOption = JOptionPane.showConfirmDialog(null, "Do you still want to exit?", "Exit", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				if (selectedOption == JOptionPane.YES_OPTION) {
 				System.exit(0);
@@ -214,7 +213,9 @@ public class GUI  {
 				else {
 					return;
 				}
+				
 			}
+			
 		});
 		
 		//MainMenu 
@@ -338,7 +339,8 @@ public class GUI  {
 		updateDialog.setTitle("Update");
 		updateDialog.add(bUpdateQty);
 
-	/*	bUpdateQty.addActionListener(new ActionListener() {
+		
+		bUpdateQty.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					
 				int ProductQty = 0;
@@ -362,7 +364,6 @@ public class GUI  {
 					return;
 				}
 				
-				System.out.println("5");
 				System.out.println("Quantity Entered: " + ProductQty);
 				
 			
@@ -387,7 +388,7 @@ public class GUI  {
 				
 			}
 		});
-		*/
+		
 		
 		
 		bUpdateQty.addActionListener(new ActionListener() {
@@ -439,6 +440,65 @@ public class GUI  {
 				}
 				
 				arrayListupdate();
+				
+			}
+		});
+		
+		ProductList.getModel().addTableModelListener(new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				int row = ProductList.getSelectedRow();
+				int col = ProductList.getSelectedColumn();
+				
+				
+				//ProductList.putClientProperty("terminateEditOnFocusLost", true);
+				//row needs to be selected
+				
+				if (row < 0 ) {
+					JOptionPane.showMessageDialog(null, GUI.this, "You must select a product" , JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				Product product = (Product) ProductList.getValueAt(row , ProductTable.Object_Col);
+				
+				String text = updateText.getText();
+				System.out.println(text);
+				
+				
+				int i = product.getProductID();
+				
+				switch(col) {
+				case 0:
+					String name = product.getProductName();
+					IMSConnector.updateProductName(name, i);
+					break;
+				case 2: 
+					int q = product.getProductQty();
+					IMSConnector.updateProductQty(q, i);
+					System.out.println("Qty" + product.getProductQty());
+					break;
+				case 3: 
+					int mQ = product.getProductMinQty();
+					IMSConnector.updateProductMinQty(mQ, i);
+					System.out.println("Qty" + product.getProductMinQty());
+					break;
+				case 4:
+					int maxQ = product.getProductMaxQty();
+					IMSConnector.updateProductMaxQty(maxQ, i);
+					System.out.println("Qty" + product.getProductMaxQty());
+					break;
+				
+				default: 
+					JOptionPane.showMessageDialog(null, GUI.this, "You must select a product" , JOptionPane.ERROR_MESSAGE);
+					break;
+					
+				}
+				
+				//arrayListupdate();
+				
+				ProductList.getSelectionModel().clearSelection();
+					ProductList.getCellEditor();
 				
 			}
 		});

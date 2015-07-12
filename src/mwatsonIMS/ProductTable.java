@@ -64,7 +64,7 @@ public class ProductTable extends AbstractTableModel {
 	public Class getColumnClass (int c) {
 		return getValueAt(0, c).getClass();
 	}
-	/*
+	
 	public boolean isCellEditable(int row, int col) {
 		switch(col) {
 			case 0:
@@ -83,9 +83,11 @@ public class ProductTable extends AbstractTableModel {
 		
 	}
 	
+	@Override
 	public void setValueAt(Object value, int row, int col) {
 		
 		
+
 		Product product = Products.get(row);
 		
 		switch (col) {
@@ -93,13 +95,11 @@ public class ProductTable extends AbstractTableModel {
 				System.out.println(value);
 				product.setProductName((String)value);
 				fireTableCellUpdated(row, col);
-				fireTableDataChanged();
 				break;
 			case 2:
 				System.out.println(value);
 				product.setProductQty(Integer.parseInt(value.toString()));
 				fireTableCellUpdated(row, col);
-				fireTableDataChanged();
 				break;
 			case 3: 
 				System.out.println(value);
@@ -116,7 +116,5 @@ public class ProductTable extends AbstractTableModel {
 				break;
 		}
 		
-		
 	}
-	*/
 }
