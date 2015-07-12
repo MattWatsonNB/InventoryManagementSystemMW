@@ -237,6 +237,7 @@ public class GUI  {
 			public void actionPerformed(ActionEvent e) {
 					
 				int checkSelected = ProductList.getSelectedRow();
+				System.out.println("Selected Row: " + checkSelected);
 				//row needs to be selected
 				if (checkSelected < 0 ) {
 					JOptionPane.showMessageDialog(null, GUI.this, "You must select a product" , JOptionPane.ERROR_MESSAGE);
@@ -248,9 +249,9 @@ public class GUI  {
 				int[] row_index = ProductList.getSelectedRows();
 				
 				
-				for (int row = 0; row < row_index.length; row++) {
 				
-				Product product = (Product) ProductList.getValueAt(row , ProductTable.Object_Col);
+				
+				Product product = (Product) ProductList.getValueAt(checkSelected , ProductTable.Object_Col);
 				
 				int i = product.getProductID();
 				
@@ -260,10 +261,10 @@ public class GUI  {
 				//System.out.println(product.getProductQty());
 				
 				arrayListupdate();
-				}} else {
-					return;
-				}
-			}
+				
+			} else {
+				return;
+			}}
 		});
 		
 	

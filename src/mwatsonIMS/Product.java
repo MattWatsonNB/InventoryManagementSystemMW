@@ -22,7 +22,6 @@ public class Product {
 			
 	//Retrieves Product ID  
 	public int getProductID(){
-		System.out.println("ProductID");
 		return ProductID;
 	}
 	
