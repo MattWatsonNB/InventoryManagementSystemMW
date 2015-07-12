@@ -1,3 +1,6 @@
-          Product ID         Product Name          Product Qty               To Buy  2015/07/12 16:41:25 
+          Product ID         Product Name          Product Qty               To Buy  2015/07/12 18:49:24 
                   63       two face gnome                   60                   10 
-                  64            Lee Gnome                    6                   44 
+                  66          hello gnome                    4                    2 
+                  67            Zoe Gnome                    4                   36 
+                  68      Arnold S. Gnome                    5                   35 
+                  71         CapGem Gnome                   14                   16 
