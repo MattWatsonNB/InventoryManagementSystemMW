@@ -18,6 +18,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -54,6 +55,7 @@ public class GUI {
 
 	private JDialog updateDialog;
 	private IMSConnector IMSConnector;
+	
 	
 	public GUI() {
 		
