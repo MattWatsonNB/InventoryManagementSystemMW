@@ -250,15 +250,17 @@ public class GUI  {
 				
 				
 				
+				for (int i : row_index) {
+				Product product = (Product) ProductList.getValueAt(i , ProductTable.Object_Col);
 				
-				Product product = (Product) ProductList.getValueAt(checkSelected , ProductTable.Object_Col);
+				int rowId = product.getProductID();
 				
-				int i = product.getProductID();
-				
-				System.out.println("ID" +  i + " Delete" );
-				IMSConnector.deleteProductQty(i);
-				System.out.println("ID" + i );
+				System.out.println( i + " Delete" );
+				IMSConnector.deleteProductQty(rowId);
+				System.out.println("ID" + rowId );
 				//System.out.println(product.getProductQty());
+				
+				}
 				
 				arrayListupdate();
 				
