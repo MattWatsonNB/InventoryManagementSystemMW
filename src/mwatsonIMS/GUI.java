@@ -1,8 +1,7 @@
 package mwatsonIMS;
 
 import javax.imageio.ImageIO;
-import javax.swing.Box;
-import javax.swing.JDialog;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -14,25 +13,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableCellRenderer;
-
-
-
-
-
-
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Rectangle;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -53,17 +43,12 @@ import java.util.Date;
 public class GUI {
 
 	private JMenuBar mainMenuBar;
-	private JTable ProductList;
-	private JButton bUpdateQty;
+	private JTable ProductList, minTable;
 	private JTextField updateText;
 	private JTextArea minQtyText;
-	//private JButton bupdateMinQtyText;
-	private JButton bPrintStockReport;
-	private JButton bPrintPurchaseOrder;
-	private JButton baddUpdate;
+	private JButton bAdd, bDelete;
 	private ProductTable model;
 
-	private JDialog updateDialog;
 	private IMSConnector IMSConnector;
 	
 	
@@ -75,15 +60,29 @@ public class GUI {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
-		
+		FlowLayout flowTopPanel = new FlowLayout();
+		flowTopPanel.setAlignment(FlowLayout.LEFT);
 		JFrame mainframe = new JFrame("Inventory Management System");
 		JPanel outerPanel = new JPanel(new BorderLayout());
-		JPanel topPanel = new JPanel();
+		JPanel topPanel = new JPanel(flowTopPanel);
 		JPanel bottomPanel = new JPanel(new BorderLayout());
-		JPanel sidePanel = new JPanel(new BorderLayout());
 		JPanel sideUpdatePanel = new JPanel(new BorderLayout());
-	
+		
+		GridLayout layout = new GridLayout(2,1);
+		JPanel sidePanel = new JPanel();
+		sidePanel.setLayout(layout);
+		ImageIcon addIcon = new ImageIcon("Images/plus-round.png");
+		bAdd = new JButton(addIcon);
+		bAdd.setBackground(Color.gray);
+		bAdd = new JButton(addIcon);
+		bAdd.setToolTipText("Add");
+		ImageIcon deleteIcon = new ImageIcon("Images/close-round.png");
+		bDelete = new JButton(deleteIcon);
+		bDelete.setBackground(Color.gray);
+		bDelete.setToolTipText("Delete");
+		
+		
+		topPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		
 		//Menu Bar
 		mainMenuBar = new JMenuBar();
@@ -305,12 +304,14 @@ public class GUI {
 		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
 		menuHelp.add(menuItemAbout);			
 		
-		minQtyText = new JTextArea();
 		
+		
+		minQtyText = new JTextArea();
 		minQtyText.setEditable(false);
 		ProductList = new JTable();
 		ProductList.setFont(new Font("SansSerif", Font.PLAIN, 16));
 		ProductList.setRowHeight(20);
+		minTable = new JTable();
 		/*ProductList.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
 
             private static final long serialVersionUID = 1L;
@@ -342,12 +343,12 @@ public class GUI {
 		
 		updateText = new JTextField();
 		JScrollPane jScrlP = new JScrollPane(ProductList);
+		jScrlP.setBackground(Color.DARK_GRAY);
 		JScrollPane textScroll = new JScrollPane(minQtyText);
 		
 		
 		arrayListupdate();
 		
-		topPanel.setPreferredSize(new Dimension(700, 20));
 		
 		ProductList.getModel().addTableModelListener(new TableModelListener() {
 			
@@ -408,12 +409,18 @@ public class GUI {
 			}
 		});
 		
-		sidePanel.add(sideUpdatePanel, BorderLayout.PAGE_START);
+		JButton bdbdf = new JButton("Hello");
+		
+		topPanel.add(bAdd);
+		topPanel.add(bDelete);
+		topPanel.setBackground(Color.DARK_GRAY);
+		//sidePanel.add(ProductList, BorderLayout.EAST);
+		outerPanel.add(topPanel, BorderLayout.NORTH);
 		outerPanel.add(jScrlP, BorderLayout.CENTER);
-		outerPanel.add(topPanel, BorderLayout.BEFORE_FIRST_LINE);
+		
 		outerPanel.add(bottomPanel, BorderLayout.PAGE_END);
 		outerPanel.add(sidePanel, BorderLayout.LINE_END);
-		
+		outerPanel.setBackground(Color.GRAY);
 		
 		ProductList.setGridColor(Color.BLACK);
 		ProductList.setIntercellSpacing(new Dimension( 1,1));
@@ -421,6 +428,7 @@ public class GUI {
 		mainframe.add(outerPanel);
 		
 		mainframe.setJMenuBar(mainMenuBar);
+		
 		try {
 			mainframe.setIconImage(ImageIO.read(new File("NBG.png")));
 		} catch (IOException e1) {
@@ -428,7 +436,8 @@ public class GUI {
 			e1.printStackTrace();
 		}
 		mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainframe.setSize(900, 500);
+		mainframe.getContentPane().setBackground(Color.BLACK);
+		mainframe.pack();
 		mainframe.setVisible(true);
 		
 	}
