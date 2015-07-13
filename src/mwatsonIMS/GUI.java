@@ -47,7 +47,7 @@ public class GUI {
 	private JTextField updateText;
 	private JTextArea minQtyText;
 	private JButton bAdd, bDelete;
-	private ProductTable model;
+	private ProductTable model, minModel;
 
 	private IMSConnector IMSConnector;
 	
@@ -343,6 +343,7 @@ public class GUI {
 		
 		updateText = new JTextField();
 		JScrollPane jScrlP = new JScrollPane(ProductList);
+		JScrollPane minScroll = new JScrollPane(minTable);
 		jScrlP.setBackground(Color.DARK_GRAY);
 		JScrollPane textScroll = new JScrollPane(minQtyText);
 		
@@ -414,7 +415,7 @@ public class GUI {
 		topPanel.add(bAdd);
 		topPanel.add(bDelete);
 		topPanel.setBackground(Color.DARK_GRAY);
-		//sidePanel.add(ProductList, BorderLayout.EAST);
+		sidePanel.add(minScroll, BorderLayout.EAST);
 		outerPanel.add(topPanel, BorderLayout.NORTH);
 		outerPanel.add(jScrlP, BorderLayout.CENTER);
 		
@@ -447,19 +448,34 @@ public class GUI {
 			//String ProductName = searchText.getText();
 			// System.out.println("Searched For" + ProductName);
 			
-			ArrayList<Product> product2 = null;
-			
+			ArrayList<Product> product2 = new ArrayList<Product>();
+			ArrayList<Product> minProduct = new ArrayList<Product>();
 			product2 = IMSConnector.getAllProducts();
 			
 			model = new ProductTable(product2);
 			
 			ProductList.setModel(model);
+			System.out.println("outside loop");
+			int i = 0;
 			
-			/*for(Product p : product) {
+			for (Product p : product2) {
+
+				if (p.getProductMinQty() > p.getProductQty()) {	
+				minProduct.add(i, p);
+				System.out.println(i);
 				System.out.println(p);
-			}*/
-		} catch (Exception exc) {
+				i++;
+					
+				}
 			
+			}
+			minModel = new ProductTable(minProduct);
+			minTable.setModel(minModel);
+			
+			
+			
+		} catch (Exception exc) {
+			exc.printStackTrace();
 		}
 	}
 	/*

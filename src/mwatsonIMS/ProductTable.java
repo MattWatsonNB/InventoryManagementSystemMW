@@ -1,6 +1,8 @@
 package mwatsonIMS;
 
 import java.util.ArrayList;
+import java.util.Vector;
+
 import javax.swing.table.AbstractTableModel;
 
 public class ProductTable extends AbstractTableModel {
@@ -21,6 +23,7 @@ public class ProductTable extends AbstractTableModel {
 
 	private ArrayList<Product> Products;
 	private String[] columns = {"Product Name" , "Product ID" , "Product Quantity", "Minimum Quantity", "Maximum Quantity"};
+	private Vector data = new Vector();
 	
 	public ProductTable(ArrayList<Product> ProductList) {
 		Products = ProductList;
