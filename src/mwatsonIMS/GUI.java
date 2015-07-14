@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
@@ -40,15 +41,15 @@ import java.util.Date;
  *
  */
 
-public class GUI {
+public class GUI implements ActionListener {
 
 	private JMenuBar mainMenuBar;
 	private JTable ProductList, minTable;
 	private JTextField updateText;
 	private JTextArea minQtyText;
-	private JButton bAdd, bDelete;
+	private JButton bAdd, bDelete, bStockReport, bProductOrder;
 	private ProductTable model, minModel;
-
+	private JMenuItem menuItemNew;
 	private IMSConnector IMSConnector;
 	
 	
@@ -71,16 +72,27 @@ public class GUI {
 		GridLayout layout = new GridLayout(2,1);
 		JPanel sidePanel = new JPanel();
 		sidePanel.setLayout(layout);
+		
 		ImageIcon addIcon = new ImageIcon("Images/plus-round.png");
 		bAdd = new JButton(addIcon);
 		bAdd.setBackground(Color.gray);
 		bAdd = new JButton(addIcon);
 		bAdd.setToolTipText("Add");
+		
 		ImageIcon deleteIcon = new ImageIcon("Images/close-round.png");
 		bDelete = new JButton(deleteIcon);
 		bDelete.setBackground(Color.gray);
 		bDelete.setToolTipText("Delete");
 		
+		ImageIcon printIcon = new ImageIcon("Images/clipboard.png");
+		bStockReport = new JButton(printIcon);
+		bStockReport.setBackground(Color.gray);
+		bStockReport.setToolTipText("Print Stock Report");
+		
+		ImageIcon productOrderIcon = new ImageIcon("Images/cart.png");
+		bProductOrder = new JButton(productOrderIcon);
+		bProductOrder.setBackground(Color.gray);
+		bProductOrder.setToolTipText("Print Product Order");
 		
 		topPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		
@@ -95,7 +107,7 @@ public class GUI {
 		
 		//Group of JMenuItems
 		//New Product
-		JMenuItem menuItemNew = new JMenuItem("New");
+		menuItemNew = new JMenuItem("New");
 		menuItemNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		menuFile.add(menuItemNew);
 		menuItemNew.addActionListener(new ActionListener () {
@@ -108,12 +120,9 @@ public class GUI {
 				Boolean Check = null;
 			try {
 					
-				
-
 				name = JOptionPane.showInputDialog(null, "Enter Product Name: " , null);
 				if (name != null ) {
 					
-				
 				Qty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Product Qty: " , null));
 				MinQty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Minimum Stock Allowed: " , null));
 				MaxQty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Maximum Stock: " , null));
@@ -246,6 +255,7 @@ public class GUI {
 		JMenuItem menuItemDelete = new JMenuItem("Delete");
 		menuItemDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.CTRL_MASK));
 		menuEdit.add(menuItemDelete);
+		
 		menuItemDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					
@@ -312,34 +322,6 @@ public class GUI {
 		ProductList.setFont(new Font("SansSerif", Font.PLAIN, 16));
 		ProductList.setRowHeight(20);
 		minTable = new JTable();
-		/*ProductList.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-         public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus, int row, int col) {
-            
-            	
-            
-             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-             Color lightRed = new Color(250,128,114);
-             int Qty = (int) table.getModel().getValueAt(row, 2);
-             int MinQty = (int) table.getModel().getValueAt(row, 3);
-             if ( Qty < MinQty) {   
-            	 for (int i = 0; i < 5; i++  ) { 
-            	 //super.getTableCellRendererComponent(table, value, isSelected, hasFocus, i, i);
-                 setBackground(lightRed);    
-            	 }
-          
-             } else {                 
-                 setBackground(null); 
-             }       
-             return this;
-             
-            
-         }   
-     });
-		*/
 		
 		updateText = new JTextField();
 		JScrollPane jScrlP = new JScrollPane(ProductList);
@@ -414,6 +396,8 @@ public class GUI {
 		
 		topPanel.add(bAdd);
 		topPanel.add(bDelete);
+		topPanel.add(bStockReport);
+		topPanel.add(bProductOrder);
 		topPanel.setBackground(Color.DARK_GRAY);
 		sidePanel.add(minScroll, BorderLayout.EAST);
 		outerPanel.add(topPanel, BorderLayout.NORTH);
@@ -478,27 +462,14 @@ public class GUI {
 			exc.printStackTrace();
 		}
 	}
-	/*
-	public static void scrollToCenter(JTable table, int rowIndex, int vColIndex) {
-	    if (!(table.getParent() instanceof JViewport)) {
-	      return;
-	    }
-	    JViewport viewport = (JViewport) table.getParent();
-	    Rectangle rect = table.getCellRect(rowIndex, vColIndex, true);
-	    Rectangle viewRect = viewport.getViewRect();
-	    rect.setLocation(rect.x - viewRect.x, rect.y - viewRect.y);
 
-	    int centerX = (viewRect.width - rect.width) / 2;
-	    int centerY = (viewRect.height - rect.height) / 2;
-	    if (rect.x < centerX) {
-	      centerX = -centerX;
-	    }
-	    if (rect.y < centerY) {
-	      centerY = -centerY;
-	    }
-	    rect.translate(centerX, centerY);
-	    viewport.scrollRectToVisible(rect);
-	  }	
-	*/
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource() == menuItemNew) {
+			
+		}
+		
+	}
 	
 }
