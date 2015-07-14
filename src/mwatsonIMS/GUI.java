@@ -96,6 +96,7 @@ public class GUI implements ActionListener {
 		bProductOrder = new JButton(productOrderIcon);
 		bProductOrder.setBackground(Color.gray);
 		bProductOrder.setToolTipText("Print Product Order");
+		bProductOrder.addActionListener(this);
 		
 		topPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		
@@ -186,9 +187,10 @@ public class GUI implements ActionListener {
 		
 		printProductOrder = new JMenuItem("Product Order");
 		printProductOrder.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.SHIFT_MASK));
+		printProductOrder.addActionListener(this);
 		printSubMenu.add(printProductOrder);
 		menuFile.add(printSubMenu);
-		printProductOrder.addActionListener(new ActionListener ()  {
+	/*	printProductOrder.addActionListener(new ActionListener ()  {
 			public void actionPerformed(ActionEvent e) {
 				
 				DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -223,7 +225,7 @@ public class GUI implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Product Order created. " );	
 			}
 		});
-		
+		*/
 		
 		//Exit
 		JMenuItem menuItemExit = new JMenuItem("Exit");
@@ -556,6 +558,39 @@ public class GUI implements ActionListener {
 			}
 	
 			JOptionPane.showMessageDialog(null, "Stock report printed. ");
+		}
+		
+		if(e.getSource() == bProductOrder || e.getSource() == printProductOrder) {
+			DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			FileWriter writer ;	
+			ArrayList<Product> allproducts = new ArrayList<Product>();
+			try {
+				allproducts = IMSConnector.getAllProducts();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+			
+			try {
+				writer = new FileWriter("ProductOrder.txt");
+				writer.write(String.format("%20s %20s %20s %20s %20s \r\n", "Product ID", "Product Name","Product Qty", "To Buy", dateformat.format(date)));
+			//Print out all products in array list and writes to txt file
+			for (Product p : allproducts) {
+				
+				if (p.getProductMinQty() > p.getProductQty()) {	
+				
+				System.out.println(p.toString());
+				writer.write(String.format("%20s %20s %20s %20s \r\n", String.valueOf(p.getProductID()), p.getProductName(),String.valueOf(p.getProductQty()), String.valueOf((p.getProductMaxQty() - p.getProductQty()))));
+				}
+				}
+			writer.close();
+			} catch (Exception exc) {
+				exc.printStackTrace();
+			}
+			JOptionPane.showMessageDialog(null, "Product Order created. " );
 		}
 		
 	}
