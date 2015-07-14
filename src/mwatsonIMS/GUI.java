@@ -3,6 +3,7 @@ package mwatsonIMS;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -10,10 +11,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -27,6 +31,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -51,6 +57,9 @@ public class GUI implements ActionListener {
 	private ProductTable model, minModel;
 	private JMenuItem menuItemNew, menuItemDelete, printStockReport, printProductOrder;
 	private IMSConnector IMSConnector;
+	private JLabel lProductName, lProductId, lPrice, lQty, lMinQty, lMaxQty, lPorousware;
+	
+	private JTextArea tProductName, tProductId, tPrice, tQty, tMinQty, tMaxQty, tPorousware;
 	
 	
 	public GUI() {
@@ -67,11 +76,30 @@ public class GUI implements ActionListener {
 		JPanel outerPanel = new JPanel(new BorderLayout());
 		JPanel topPanel = new JPanel(flowTopPanel);
 		JPanel bottomPanel = new JPanel(new BorderLayout());
-		JPanel sideUpdatePanel = new JPanel(new BorderLayout());
 		
-		GridLayout layout = new GridLayout(2,1);
+		GridLayout layout = new GridLayout(7,2);
+		JPanel sideFormPanel = new JPanel();
+		sideFormPanel.setLayout(layout);
+		
 		JPanel sidePanel = new JPanel();
-		sidePanel.setLayout(layout);
+		
+		
+		
+		lProductName = new JLabel("Product Name");
+		lProductId = new JLabel("Product Id");
+		lPrice = new JLabel("Price");
+		lQty = new JLabel("Quantity");
+		lMinQty = new JLabel("Minimum Qty");
+		lMaxQty = new JLabel("Maximum Qty");
+		lPorousware = new JLabel("Porousware Available");
+		
+		tProductName = new JTextArea(); 
+		tProductId = new JTextArea();
+		tPrice = new JTextArea();
+		tQty = new JTextArea();
+		tMinQty = new JTextArea();
+		tMaxQty = new JTextArea();
+		tPorousware = new JTextArea();
 		
 		ImageIcon addIcon = new ImageIcon("Images/plus-round.png");
 		bAdd = new JButton(addIcon);
@@ -329,7 +357,8 @@ public class GUI implements ActionListener {
 		ProductList.setFont(new Font("SansSerif", Font.PLAIN, 16));
 		ProductList.setRowHeight(20);
 		minTable = new JTable();
-		
+		ProductList.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		minTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		updateText = new JTextField();
 		JScrollPane jScrlP = new JScrollPane(ProductList);
 		JScrollPane minScroll = new JScrollPane(minTable);
@@ -399,18 +428,62 @@ public class GUI implements ActionListener {
 			}
 		});
 		
-		JButton bdbdf = new JButton("Hello");
+		ProductList.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+				int row = ProductList.getSelectedRow();
+				Product product = (Product) ProductList.getValueAt(row , ProductTable.Object_Col);
+				String productName = product.getProductName();
+				String productID = Integer.toString(product.getProductID());
+				String productQty = Integer.toString(product.getProductQty());
+				String minQty = Integer.toString(product.getProductMinQty());
+				String maxQty = Integer.toString(product.getProductMaxQty());
+				
+				tProductName.setText(null);
+				tProductName.insert(productName, 0);
+				tProductId.setText(null);
+				tProductId.insert(productID, 0);
+				tQty.setText(null);
+				tQty.setText(productQty);
+				tMinQty.setText(null);
+				tMinQty.setText(minQty);
+				tMaxQty.setText(null);
+				tMaxQty.setText(maxQty);
+				
+			}
+			
+		});
+		
+		
+		
+		
+		sideFormPanel.add(lProductName);
+		sideFormPanel.add(tProductName);
+		sideFormPanel.add(lProductId);
+		sideFormPanel.add(tProductId);
+		sideFormPanel.add(lPrice);
+		sideFormPanel.add(tPrice);
+		sideFormPanel.add(lQty);
+		sideFormPanel.add(tQty);
+		sideFormPanel.add(lMinQty);
+		sideFormPanel.add(tMinQty);
+		sideFormPanel.add(lMaxQty);
+		sideFormPanel.add(tMaxQty);
+		sideFormPanel.add(lPorousware);
+		sideFormPanel.add(tPorousware);
+		
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, sideFormPanel, minScroll );
 		
 		topPanel.add(bAdd);
 		topPanel.add(bDelete);
 		topPanel.add(bStockReport);
 		topPanel.add(bProductOrder);
 		topPanel.setBackground(Color.DARK_GRAY);
-		sidePanel.add(minScroll, BorderLayout.EAST);
+		sidePanel.add(splitPane);
+		sidePanel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 3)));;
 		outerPanel.add(topPanel, BorderLayout.NORTH);
 		outerPanel.add(jScrlP, BorderLayout.CENTER);
-		
-		outerPanel.add(bottomPanel, BorderLayout.PAGE_END);
+		outerPanel.add(bottomPanel, BorderLayout.SOUTH);
 		outerPanel.add(sidePanel, BorderLayout.LINE_END);
 		outerPanel.setBackground(Color.GRAY);
 		
