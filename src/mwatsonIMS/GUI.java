@@ -481,6 +481,7 @@ public class GUI implements ActionListener {
 		topPanel.setBackground(Color.DARK_GRAY);
 		sidePanel.add(splitPane);
 		sidePanel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 3)));;
+		sidePanel.setPreferredSize(300, 300);
 		outerPanel.add(topPanel, BorderLayout.NORTH);
 		outerPanel.add(jScrlP, BorderLayout.CENTER);
 		outerPanel.add(bottomPanel, BorderLayout.SOUTH);
