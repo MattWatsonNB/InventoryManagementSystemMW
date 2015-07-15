@@ -572,6 +572,12 @@ public class GUI implements ActionListener {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		try {
+			mainframe.setIconImage(ImageIO.read(new File("/home/developer/InventoryManagementSystemMW/Images/")));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainframe.getContentPane().setBackground(Color.BLACK);
 		mainframe.pack();
