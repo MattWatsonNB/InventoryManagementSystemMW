@@ -573,7 +573,7 @@ public class GUI implements ActionListener {
 			e1.printStackTrace();
 		}
 		try {
-			mainframe.setIconImage(ImageIO.read(new File("/home/developer/InventoryManagementSystemMW/Images/NBG.png")));
+			mainframe.setIconImage(ImageIO.read(new File("/home/developer/InventoryManagementSystemMW/NBG.png")));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
