@@ -164,14 +164,6 @@ public class GUI implements ActionListener {
 			
 		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
 		bAdd = new JButton(addIcon);
 		bAdd.setBackground(Color.gray);
 		
@@ -526,7 +518,7 @@ public class GUI implements ActionListener {
 				tMaxQty.setText(null);
 				tMaxQty.setText(maxQty);
 				tPrice.setText(null);
-				tPrice.setText("£ " +price);
+				tPrice.setText(price);
 				tPorousware.setText(null);
 				tPorousware.setText(porousWare);
 				
@@ -696,6 +688,9 @@ public class GUI implements ActionListener {
 			Date date = new Date();
 			FileWriter writer ;
 			ArrayList<Product> allproducts = new ArrayList<Product>();
+			
+			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure you want to print?", "Stock Report", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			if (selectedOption == JOptionPane.YES_OPTION) {
 			try {
 				allproducts = IMSConnector.getAllProducts();
 			} catch (Exception e1) {
@@ -716,6 +711,10 @@ public class GUI implements ActionListener {
 			}
 	
 			JOptionPane.showMessageDialog(null, "Stock report printed. ");
+			} else {
+				return;
+			}
+			
 		}
 		
 		if(e.getSource() == bProductOrder || e.getSource() == printProductOrder) {
