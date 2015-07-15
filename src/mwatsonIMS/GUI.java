@@ -113,52 +113,16 @@ public class GUI implements ActionListener {
 		
 		String productOrderLocation = "Images/cart.png";
 		
-		try { 
+		
 			addIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/plus-round.png");
-		} catch(Exception e) {
-			
-		}
 		
-		try {
-			addIcon = new ImageIcon(addIconLocation);
-		} catch (Exception e) {
-			
-		}
-		
-		try {
 			deleteIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/close-round.png");
-		} catch (Exception e) {
-			
-		}
-		
-		try { 
-			deleteIcon = new ImageIcon(deleteIconLocation);
-		} catch(Exception e) {
-			
-		}
-		
-		try {
+	
 			printIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/clipboard.png");
-		} catch (Exception e) {
-			
-		}
-		try { 
-			printIcon = new ImageIcon(printIconLocation);
-		} catch(Exception e) {
-			
-		}
+	
 		
-		try {
 			productOrderIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/cart.png");
-		} catch (Exception e) {
-			
-		}
 		
-		try { 
-			productOrderIcon = new ImageIcon(productOrderLocation);
-		} catch(Exception e) {
-			
-		}
 		
 		bAdd = new JButton(addIcon);
 		bAdd.setBackground(Color.gray);
