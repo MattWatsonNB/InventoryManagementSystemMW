@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 
 public class ProductTable extends AbstractTableModel {
 	
@@ -88,6 +89,7 @@ public class ProductTable extends AbstractTableModel {
 	
 	@Override
 	public void setValueAt(Object value, int row, int col) {
+		System.out.println("Set Value At");
 		
 		
 
@@ -102,7 +104,9 @@ public class ProductTable extends AbstractTableModel {
 			case 2:
 				System.out.println(value);
 				product.setProductQty(Integer.parseInt(value.toString()));
+				System.out.println("Qty - Fire");
 				fireTableCellUpdated(row, col);
+				
 				break;
 			case 3: 
 				System.out.println(value);
@@ -118,6 +122,7 @@ public class ProductTable extends AbstractTableModel {
 				System.out.println(value);
 				break;
 		}
-		
+	
 	}
+	
 }

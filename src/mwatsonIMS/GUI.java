@@ -105,7 +105,8 @@ public class GUI implements ActionListener {
 		ImageIcon printIcon = null;
 		ImageIcon productOrderIcon = null;
 		
-		String addIconLocation = "Images/plus-round.png";
+		String addIconLocation_Windows = "Images/plus-round.png";
+		
 		
 		String deleteIconLocation = "Images/close-round.png";
 		
@@ -394,6 +395,8 @@ public class GUI implements ActionListener {
 			
 			@Override
 			public void tableChanged(TableModelEvent e) {
+				System.out.println("Table Change");
+				
 				int row = ProductList.getSelectedRow();
 				int col = ProductList.getSelectedColumn();
 				
@@ -441,11 +444,44 @@ public class GUI implements ActionListener {
 					
 				}
 				
-				//arrayListupdate();
 				
-				ProductList.getSelectionModel().clearSelection();
+				ArrayList<Product> allproducts = new ArrayList<Product>();
+				ArrayList<Product> minProduct = new ArrayList<Product>();
+				
+				try {
+					allproducts = IMSConnector.getAllProducts();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				
+				int i2 = 0;
+				for (Product p : allproducts) {
+
+					if (p.getProductMinQty() > p.getProductQty()) {	
+					minProduct.add(i2, p);
+					System.out.println(i2);
+					System.out.println(p);
+					i2++;
+						
+					}
+				
+				}
+				System.out.println("Finish");
+				minModel = new ProductTable(minProduct);
+				minTable.setModel(minModel);
+			
+			}
+		});
+		
+		minTable.getModel().addTableModelListener(new TableModelListener() {
+				
+				@Override
+				public void tableChanged(TableModelEvent e) {
+					ProductList.getSelectionModel().clearSelection();
 					ProductList.getCellEditor();
-				
 			}
 		});
 		
@@ -485,7 +521,6 @@ public class GUI implements ActionListener {
 			}
 			
 		});
-		
 		
 		
 		
@@ -549,6 +584,10 @@ public class GUI implements ActionListener {
 		try {
 			//String ProductName = searchText.getText();
 			// System.out.println("Searched For" + ProductName);
+			System.out.println("Start Array List Update");
+			ProductList.getSelectionModel().clearSelection();
+			ProductList.getCellEditor();
+			
 			
 			ArrayList<Product> product2 = new ArrayList<Product>();
 			ArrayList<Product> minProduct = new ArrayList<Product>();
@@ -571,9 +610,12 @@ public class GUI implements ActionListener {
 				}
 			
 			}
+			System.out.println("Finish");
 			minModel = new ProductTable(minProduct);
 			minTable.setModel(minModel);
 			
+			minTable.getSelectionModel().clearSelection();
+			minTable.getCellEditor();
 			
 			
 		} catch (Exception exc) {
@@ -583,6 +625,8 @@ public class GUI implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		arrayListupdate();
 		
 		if(e.getSource() == menuItemNew || e.getSource() == bAdd) {
 			String name;
@@ -641,8 +685,6 @@ public class GUI implements ActionListener {
 			//System.out.println(product.getProductQty());
 			
 			}
-			
-			arrayListupdate();
 			
 		} else {
 			return;

@@ -39,7 +39,7 @@ public class IMSConnector {
 	}
 	
 	public ArrayList<Product> getAllProducts() throws Exception {
-		
+		System.out.println("Begin Get All Products");
 		Statement myStmt = null;
 		ResultSet myRs  = null;
 		ArrayList<Product> allproducts = new ArrayList<Product>();
@@ -67,9 +67,6 @@ public class IMSConnector {
 				int porousWare = myRs.getInt("Porousware");
 				allproducts.add(new Product(PID, PQ, MinQ, MaxQ, PN, price, porousWare));
 			}
-			
-			
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -78,9 +75,7 @@ public class IMSConnector {
 				if (myStmt != null){
 					myConn.close();
 				}
-			} catch (SQLException se) {
-			}
-			
+			} catch (SQLException se) { se.printStackTrace(); }
 			try {
 				if (myConn != null) {
 					myConn.close();
@@ -147,6 +142,8 @@ public class IMSConnector {
 		}
 	
 	public void updateProductQty(int Qty, int ID) {
+		
+		System.out.println("Update Product Qty");
 		PreparedStatement myStmt = null;
 		
 		if (myConn != null) {
