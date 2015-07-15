@@ -1,4 +1,4 @@
-          Product ID         Product Name          Product Qty  2015/07/14 18:54:13 
+          Product ID         Product Name          Product Qty  2015/07/15 11:40:12 
                   52                hello                   55 
                   63       two face gnome                   60 
                   66          hello gnome                    4 
@@ -7,3 +7,5 @@
                   69           Alec Gnome                   10 
                   70           Jira Gnome                    5 
                   71         CapGem Gnome                   14 
+                  72                Hello                    5 
+                  73          James Gnome                   10 

@@ -58,7 +58,6 @@ public class GUI implements ActionListener {
 	private JMenuItem menuItemNew, menuItemDelete, printStockReport, printProductOrder;
 	private IMSConnector IMSConnector;
 	private JLabel lProductName, lProductId, lPrice, lQty, lMinQty, lMaxQty, lPorousware;
-	
 	private JTextArea tProductName, tProductId, tPrice, tQty, tMinQty, tMaxQty, tPorousware;
 	
 	
@@ -101,26 +100,96 @@ public class GUI implements ActionListener {
 		tMaxQty = new JTextArea();
 		tPorousware = new JTextArea();
 		
-		ImageIcon addIcon = new ImageIcon("Images/plus-round.png");
+		ImageIcon addIcon = null;
+		ImageIcon deleteIcon = null;
+		ImageIcon printIcon = null;
+		ImageIcon productOrderIcon = null;
+		
+		String addIconLocation = "Images/plus-round.png";
+		String addLinuxLocation = "/home/developer/InventoryManagementSystemMW/Images/plus-round.png";
+		
+		String deleteIconLocation = "Images/close-round.png";
+		String deleteLinuxLocation = "/home/developer/InventoryManagementSystemMW/Images/close-round.png";
+		
+		String printIconLocation = "Images/clipboard.png";
+		String printLinuxLocation = "/home/developer/InventoryManagementSystemMW/Images/clipboard.png";
+		
+		String productOrderLocation = "Images/cart.png";
+		String productOrderLinux = "/home/developer/InventoryManagementSystemMW/Images/cart.png";
+		
+		try { 
+			addIcon = new ImageIcon(addLinuxLocation);
+		} catch(Exception e) {
+			
+		}
+		
+		try {
+			addIcon = new ImageIcon(addIconLocation);
+		} catch (Exception e) {
+			
+		}
+		
+		try {
+			deleteIcon = new ImageIcon(deleteLinuxLocation);
+		} catch (Exception e) {
+			
+		}
+		
+		try { 
+			deleteIcon = new ImageIcon(deleteIconLocation);
+		} catch(Exception e) {
+			
+		}
+		
+		try {
+			printIcon = new ImageIcon(printLinuxLocation);
+		} catch (Exception e) {
+			
+		}
+		try { 
+			printIcon = new ImageIcon(printIconLocation);
+		} catch(Exception e) {
+			
+		}
+		
+		try {
+			productOrderIcon = new ImageIcon(productOrderLinux);
+		} catch (Exception e) {
+			
+		}
+		
+		try { 
+			productOrderIcon = new ImageIcon(productOrderLocation);
+		} catch(Exception e) {
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		bAdd = new JButton(addIcon);
 		bAdd.setBackground(Color.gray);
-		bAdd = new JButton(addIcon);
+		
 		bAdd.setToolTipText("Add");
 		bAdd.addActionListener(this);
 		
-		ImageIcon deleteIcon = new ImageIcon("Images/close-round.png");
 		bDelete = new JButton(deleteIcon);
 		bDelete.setBackground(Color.gray);
 		bDelete.setToolTipText("Delete");
 		bDelete.addActionListener(this);
 		
-		ImageIcon printIcon = new ImageIcon("Images/clipboard.png");
+		
 		bStockReport = new JButton(printIcon);
 		bStockReport.setBackground(Color.gray);
 		bStockReport.setToolTipText("Print Stock Report");
 		bStockReport.addActionListener(this);
 		
-		ImageIcon productOrderIcon = new ImageIcon("Images/cart.png");
+		
 		bProductOrder = new JButton(productOrderIcon);
 		bProductOrder.setBackground(Color.gray);
 		bProductOrder.setToolTipText("Print Product Order");
