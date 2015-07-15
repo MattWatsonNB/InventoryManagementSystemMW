@@ -438,6 +438,13 @@ public class GUI implements ActionListener {
 				String productQty = Integer.toString(product.getProductQty());
 				String minQty = Integer.toString(product.getProductMinQty());
 				String maxQty = Integer.toString(product.getProductMaxQty());
+				String price = Float.toString(product.getProductPrice());
+				String porousWare;
+				if (product.getPorouswareAvailable() == 1) {
+					porousWare = "Yes";
+				} else {
+					porousWare = "No";
+				}
 				
 				tProductName.setText(null);
 				tProductName.insert(productName, 0);
@@ -449,6 +456,10 @@ public class GUI implements ActionListener {
 				tMinQty.setText(minQty);
 				tMaxQty.setText(null);
 				tMaxQty.setText(maxQty);
+				tPrice.setText(null);
+				tPrice.setText("£ " +price);
+				tPorousware.setText(null);
+				tPorousware.setText(porousWare);
 				
 			}
 			
@@ -481,7 +492,6 @@ public class GUI implements ActionListener {
 		topPanel.setBackground(Color.DARK_GRAY);
 		sidePanel.add(splitPane);
 		sidePanel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 3)));;
-		sidePanel.setPreferredSize(300, 300);
 		outerPanel.add(topPanel, BorderLayout.NORTH);
 		outerPanel.add(jScrlP, BorderLayout.CENTER);
 		outerPanel.add(bottomPanel, BorderLayout.SOUTH);
@@ -552,6 +562,9 @@ public class GUI implements ActionListener {
 			int Qty = 0;
 			int MinQty;
 			int MaxQty;
+			float Price;
+			int Porousware;
+			
 			Boolean Check = null;
 		try {
 				
@@ -561,8 +574,10 @@ public class GUI implements ActionListener {
 			Qty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Product Qty: " , null));
 			MinQty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Minimum Stock Allowed: " , null));
 			MaxQty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Maximum Stock: " , null));
+			Price = Float.parseFloat(JOptionPane.showInputDialog(null, "Enter Price: " , null));
+			Porousware = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter if Poroursware is available (0 or 1) : " , null));
 			
-			IMSConnector.addProduct(name, Qty, MinQty, MaxQty);
+			IMSConnector.addProduct(name, Qty, MinQty, MaxQty, Price, Porousware);
 			arrayListupdate();
 			}
 			

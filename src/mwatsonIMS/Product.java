@@ -8,16 +8,38 @@ public class Product {
 	private int ProductMinQty;
 	private int ProductMaxQty;
 	private String ProductName;
-		
+	private float productPrice;
+	private int porouswareAvailable;
+	
 	
 	//When the product is created, each instance is passed all of these values in the constructor
-	public Product(int ID, int Qty, String Name, int MinQty, int MaxQty) {	
-		ProductID = ID;
-		ProductQty = Qty;
-		ProductName = Name;
-		ProductMinQty = MinQty;
-		ProductMaxQty = MaxQty;
-		
+		public Product(int productID, int productQty, int productMinQty,
+				int productMaxQty, String productName, float productPrice,
+				int porouswareAvailable) {
+			
+			this.ProductID = productID;
+			this.ProductQty = productQty;
+			this.ProductMinQty = productMinQty;
+			this.ProductMaxQty = productMaxQty;
+			this.ProductName = productName;
+			this.productPrice = productPrice;
+			this.porouswareAvailable = porouswareAvailable;
+		}
+	
+	public float getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(float productPrice) {
+		this.productPrice = productPrice;
+	}
+
+	public int getPorouswareAvailable() {
+		return porouswareAvailable;
+	}
+
+	public void setPorouswareAvailable(int porouswareAvailable) {
+		this.porouswareAvailable = porouswareAvailable;
 	}
 			
 	//Retrieves Product ID  
@@ -76,6 +98,6 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [ProductID=" + ProductID + ", ProductQty=" + ProductQty
-				+ ", ProductName=" + ProductName + ", ProductMinQty" + ProductMinQty + "]";
+				+ ", ProductName=" + ProductName + ", ProductMinQty" + ProductMinQty + ", ProductPrice " + productPrice + ", Porousware Available " + porouswareAvailable +  "]";
 	}	
 }

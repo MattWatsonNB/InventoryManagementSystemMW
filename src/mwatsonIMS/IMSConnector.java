@@ -55,14 +55,17 @@ public class IMSConnector {
 			while(myRs.next()) {
 				
 				System.out.println(myRs.getString("ProductName") +  ", " + myRs.getString("ProductID") 
-									+ ", " + myRs.getString("ProductQty") + ", " + myRs.getString("MinQty") + ", " + myRs.getString("MaxQty"));
+									+ ", " + myRs.getString("ProductQty") + ", " + myRs.getString("MinQty") 
+									+ ", " + myRs.getString("MaxQty") + ", " + myRs.getString("Price") + "," + myRs.getString("Porousware"));
 				
 				int PID = myRs.getInt("ProductID");
 				int PQ = myRs.getInt("ProductQTY");
 				int MinQ = myRs.getInt("MinQty");
 				int MaxQ = myRs.getInt("MaxQty");
 				String PN = myRs.getString("ProductName");
-				allproducts.add(new Product(PID, PQ, PN, MinQ, MaxQ));
+				float price = myRs.getFloat("Price");
+				int porousWare = myRs.getInt("Porousware");
+				allproducts.add(new Product(PID, PQ, MinQ, MaxQ, PN, price, porousWare));
 			}
 			
 			
@@ -357,7 +360,7 @@ public class IMSConnector {
 			//System.out.println("Goodbye");
 		}
 	
-	public void addProduct(String Name, int Qty, int MinQty, int MaxQty) {
+	public void addProduct(String Name, int Qty, int MinQty, int MaxQty, float productPrice, int porousware) {
 		PreparedStatement myStmt = null;
 		
 		if (myConn != null) {
@@ -372,12 +375,14 @@ public class IMSConnector {
 			try {
 			//Create Statement 
 			//	System.out.println("Connecting");
-			myStmt = myConn.prepareStatement( "INSERT into product(ProductName, ProductQTY, MinQty, MaxQty)" + " VALUES (?, ?, ?, ?)");
+			myStmt = myConn.prepareStatement( "INSERT into product(ProductName, ProductQTY, MinQty, MaxQty, Price, Porousware)" + " VALUES (?, ?, ?, ?, ?, ?)");
 		
 			myStmt.setString(1, Name);
 			myStmt.setInt(2, Qty);
 			myStmt.setInt(3, MinQty);
 			myStmt.setInt(4, MaxQty);
+			myStmt.setFloat(5, productPrice);
+			myStmt.setInt(6, porousware);
 			
 			myStmt.executeUpdate();
 		
