@@ -41,7 +41,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**This class is used to create the GUI. This includes all buttons 
+/**
+ * This class is used to create the GUI. This includes all buttons
  * 
  * @author mwatson
  *
@@ -55,14 +56,16 @@ public class GUI implements ActionListener {
 	private JTextArea minQtyText;
 	private JButton bAdd, bDelete, bStockReport, bProductOrder;
 	private ProductTable model, minModel;
-	private JMenuItem menuItemNew, menuItemDelete, printStockReport, printProductOrder;
+	private JMenuItem menuItemNew, menuItemDelete, printStockReport,
+			printProductOrder;
 	private IMSConnector IMSConnector;
-	private JLabel lProductName, lProductId, lPrice, lQty, lMinQty, lMaxQty, lPorousware;
-	private JTextArea tProductName, tProductId, tPrice, tQty, tMinQty, tMaxQty, tPorousware;
-	
-	
+	private JLabel lProductName, lProductId, lPrice, lQty, lMinQty, lMaxQty,
+			lPorousware;
+	private JTextArea tProductName, tProductId, tPrice, tQty, tMinQty, tMaxQty,
+			tPorousware;
+
 	public GUI() {
-		
+
 		try {
 			IMSConnector = new IMSConnector();
 		} catch (Exception e1) {
@@ -75,15 +78,13 @@ public class GUI implements ActionListener {
 		JPanel outerPanel = new JPanel(new BorderLayout());
 		JPanel topPanel = new JPanel(flowTopPanel);
 		JPanel bottomPanel = new JPanel(new BorderLayout());
-		
-		GridLayout layout = new GridLayout(7,2);
+
+		GridLayout layout = new GridLayout(7, 2);
 		JPanel sideFormPanel = new JPanel();
 		sideFormPanel.setLayout(layout);
-		
+
 		JPanel sidePanel = new JPanel();
-		
-		
-		
+
 		lProductName = new JLabel("Product Name");
 		lProductId = new JLabel("Product Id");
 		lPrice = new JLabel("Price");
@@ -91,288 +92,265 @@ public class GUI implements ActionListener {
 		lMinQty = new JLabel("Minimum Qty");
 		lMaxQty = new JLabel("Maximum Qty");
 		lPorousware = new JLabel("Porousware Available");
-		
-		tProductName = new JTextArea(); 
+
+		tProductName = new JTextArea();
 		tProductId = new JTextArea();
 		tPrice = new JTextArea();
 		tQty = new JTextArea();
 		tMinQty = new JTextArea();
 		tMaxQty = new JTextArea();
 		tPorousware = new JTextArea();
-		
+
 		ImageIcon addIcon = null;
 		ImageIcon deleteIcon = null;
 		ImageIcon printIcon = null;
 		ImageIcon productOrderIcon = null;
-		
-		String addIconLocation_Windows = "Images/plus-round.png";
-		
-		
-		String deleteIconLocation = "Images/close-round.png";
-		
-		String printIconLocation = "Images/clipboard.png";
-		
-		String productOrderLocation = "Images/cart.png";
-		
-		
-			addIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/plus-round.png");
-		
-			deleteIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/close-round.png");
-	
-			printIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/clipboard.png");
-	
-		
-			productOrderIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/cart.png");
-		
-		
+
+		final String addIconLocation = "Images/plus-round.png";
+		final String deleteIconLocation = "Images/close-round.png";
+		final String printIconLocation = "Images/clipboard.png";
+		final String productOrderLocation = "Images/cart.png";
+
+		addIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/plus-round.png");
+		deleteIcon = new ImageIcon(
+				"/home/developer/InventoryManagementSystemMW/Images/close-round.png");
+		printIcon = new ImageIcon(
+				"/home/developer/InventoryManagementSystemMW/Images/clipboard.png");
+		productOrderIcon = new ImageIcon(
+				"/home/developer/InventoryManagementSystemMW/Images/cart.png");
+
 		bAdd = new JButton(addIcon);
 		bAdd.setBackground(Color.gray);
-		
+
 		bAdd.setToolTipText("Add");
 		bAdd.addActionListener(this);
-		
+
 		bDelete = new JButton(deleteIcon);
 		bDelete.setBackground(Color.gray);
 		bDelete.setToolTipText("Delete");
 		bDelete.addActionListener(this);
-		
-		
+
 		bStockReport = new JButton(printIcon);
 		bStockReport.setBackground(Color.gray);
 		bStockReport.setToolTipText("Print Stock Report");
 		bStockReport.addActionListener(this);
-		
-		
+
 		bProductOrder = new JButton(productOrderIcon);
 		bProductOrder.setBackground(Color.gray);
 		bProductOrder.setToolTipText("Print Product Order");
 		bProductOrder.addActionListener(this);
-		
+
 		topPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		
-		//Menu Bar
+
+		// Menu Bar
 		mainMenuBar = new JMenuBar();
-		
-		//Main Menu - File
+
+		// Main Menu - File
 		JMenu menuFile = new JMenu("File");
 		menuFile.setMnemonic(KeyEvent.VK_A);
 		menuFile.getAccessibleContext().setAccessibleDescription("File");
 		mainMenuBar.add(menuFile);
-		
-		//Group of JMenuItems
-		//New Product
+
+		// Group of JMenuItems
+		// New Product
 		menuItemNew = new JMenuItem("New");
-		menuItemNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+		menuItemNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+				ActionEvent.CTRL_MASK));
 		menuFile.add(menuItemNew);
 		menuItemNew.addActionListener(this);
-/*		menuItemNew.addActionListener(new ActionListener () {
-			public void actionPerformed(ActionEvent e) {
-				
-				String name;
-				int Qty = 0;
-				int MinQty;
-				int MaxQty;
-				Boolean Check = null;
-			try {
-					
-				name = JOptionPane.showInputDialog(null, "Enter Product Name: " , null);
-				if (name != null ) {
-					
-				Qty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Product Qty: " , null));
-				MinQty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Minimum Stock Allowed: " , null));
-				MaxQty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Maximum Stock: " , null));
-				
-				IMSConnector.addProduct(name, Qty, MinQty, MaxQty);
-				arrayListupdate();
-				}
-				
-			} catch (NumberFormatException nfe) {
-				JOptionPane.showMessageDialog(null, "Input must be a number");
-			
-			} 
-			}
-		});
-		
-	*/	
-		//Print
+		/*
+		 * menuItemNew.addActionListener(new ActionListener () { public void
+		 * actionPerformed(ActionEvent e) {
+		 * 
+		 * String name; int Qty = 0; int MinQty; int MaxQty; Boolean Check =
+		 * null; try {
+		 * 
+		 * name = JOptionPane.showInputDialog(null, "Enter Product Name: " ,
+		 * null); if (name != null ) {
+		 * 
+		 * Qty = Integer.parseInt(JOptionPane.showInputDialog(null,
+		 * "Enter Product Qty: " , null)); MinQty =
+		 * Integer.parseInt(JOptionPane.showInputDialog(null,
+		 * "Enter Minimum Stock Allowed: " , null)); MaxQty =
+		 * Integer.parseInt(JOptionPane.showInputDialog(null,
+		 * "Enter Maximum Stock: " , null));
+		 * 
+		 * IMSConnector.addProduct(name, Qty, MinQty, MaxQty);
+		 * arrayListupdate(); }
+		 * 
+		 * } catch (NumberFormatException nfe) {
+		 * JOptionPane.showMessageDialog(null, "Input must be a number");
+		 * 
+		 * } } });
+		 */
+		// Print
 		menuFile.addSeparator();
 		JMenu printSubMenu = new JMenu("Print");
-		printSubMenu.setMnemonic(KeyEvent.VK_P);		
-		
+		printSubMenu.setMnemonic(KeyEvent.VK_P);
+
 		printStockReport = new JMenuItem("Stock Report");
-		printStockReport.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+		printStockReport.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
+				ActionEvent.CTRL_MASK));
 		printStockReport.addActionListener(this);
 		printSubMenu.add(printStockReport);
 		/*
-		printStockReport.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-				Date date = new Date();
-				FileWriter writer ;
-				ArrayList<Product> allproducts = new ArrayList<Product>();
-				try {
-					allproducts = IMSConnector.getAllProducts();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				try {
-					writer = new FileWriter("output.txt");
-					writer.write(String.format("%20s %20s %20s %20s \r\n", "Product ID", "Product Name","Product Qty", dateformat.format(date)));
-				//Print out all products in array list and writes to txt file
-				for (Product p : allproducts) {
-					System.out.println(p.toString());
-					writer.write(String.format("%20s %20s %20s \r\n", String.valueOf(p.getProductID()), p.getProductName(),String.valueOf(p.getProductQty())));  
-					}
-				writer.close();
-				} catch (Exception exc) {
-					exc.printStackTrace();
-				}
-		
-				JOptionPane.showMessageDialog(null, "Stock report printed. ");
-		}
-			});
-		*/
-		
+		 * printStockReport.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) {
+		 * 
+		 * DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		 * Date date = new Date(); FileWriter writer ; ArrayList<Product>
+		 * allproducts = new ArrayList<Product>(); try { allproducts =
+		 * IMSConnector.getAllProducts(); } catch (Exception e1) { // TODO
+		 * Auto-generated catch block e1.printStackTrace(); } try { writer = new
+		 * FileWriter("output.txt");
+		 * writer.write(String.format("%20s %20s %20s %20s \r\n", "Product ID",
+		 * "Product Name","Product Qty", dateformat.format(date))); //Print out
+		 * all products in array list and writes to txt file for (Product p :
+		 * allproducts) { System.out.println(p.toString());
+		 * writer.write(String.format("%20s %20s %20s \r\n",
+		 * String.valueOf(p.getProductID()),
+		 * p.getProductName(),String.valueOf(p.getProductQty()))); }
+		 * writer.close(); } catch (Exception exc) { exc.printStackTrace(); }
+		 * 
+		 * JOptionPane.showMessageDialog(null, "Stock report printed. "); } });
+		 */
+
 		printProductOrder = new JMenuItem("Product Order");
-		printProductOrder.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.SHIFT_MASK));
+		printProductOrder.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
+				ActionEvent.SHIFT_MASK));
 		printProductOrder.addActionListener(this);
 		printSubMenu.add(printProductOrder);
 		menuFile.add(printSubMenu);
-	/*	printProductOrder.addActionListener(new ActionListener ()  {
-			public void actionPerformed(ActionEvent e) {
-				
-				DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-				Date date = new Date();
-				FileWriter writer ;	
-				ArrayList<Product> allproducts = new ArrayList<Product>();
-				try {
-					allproducts = IMSConnector.getAllProducts();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				
-				
-				try {
-					writer = new FileWriter("ProductOrder.txt");
-					writer.write(String.format("%20s %20s %20s %20s %20s \r\n", "Product ID", "Product Name","Product Qty", "To Buy", dateformat.format(date)));
-				//Print out all products in array list and writes to txt file
-				for (Product p : allproducts) {
-					
-					if (p.getProductMinQty() > p.getProductQty()) {	
-					
-					System.out.println(p.toString());
-					writer.write(String.format("%20s %20s %20s %20s \r\n", String.valueOf(p.getProductID()), p.getProductName(),String.valueOf(p.getProductQty()), String.valueOf((p.getProductMaxQty() - p.getProductQty()))));
-					}
-					}
-				writer.close();
-				} catch (Exception exc) {
-					exc.printStackTrace();
-				}
-				JOptionPane.showMessageDialog(null, "Product Order created. " );	
-			}
-		});
-		*/
-		
-		//Exit
+		/*
+		 * printProductOrder.addActionListener(new ActionListener () { public
+		 * void actionPerformed(ActionEvent e) {
+		 * 
+		 * DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		 * Date date = new Date(); FileWriter writer ; ArrayList<Product>
+		 * allproducts = new ArrayList<Product>(); try { allproducts =
+		 * IMSConnector.getAllProducts(); } catch (Exception e1) { // TODO
+		 * Auto-generated catch block e1.printStackTrace(); }
+		 * 
+		 * 
+		 * 
+		 * try { writer = new FileWriter("ProductOrder.txt");
+		 * writer.write(String.format("%20s %20s %20s %20s %20s \r\n",
+		 * "Product ID", "Product Name","Product Qty", "To Buy",
+		 * dateformat.format(date))); //Print out all products in array list and
+		 * writes to txt file for (Product p : allproducts) {
+		 * 
+		 * if (p.getProductMinQty() > p.getProductQty()) {
+		 * 
+		 * System.out.println(p.toString());
+		 * writer.write(String.format("%20s %20s %20s %20s \r\n",
+		 * String.valueOf(p.getProductID()),
+		 * p.getProductName(),String.valueOf(p.getProductQty()),
+		 * String.valueOf((p.getProductMaxQty() - p.getProductQty())))); } }
+		 * writer.close(); } catch (Exception exc) { exc.printStackTrace(); }
+		 * JOptionPane.showMessageDialog(null, "Product Order created. " ); }
+		 * });
+		 */
+
+		// Exit
 		JMenuItem menuItemExit = new JMenuItem("Exit");
-		menuItemExit .setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
-		menuFile.add(menuItemExit );
+		menuItemExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
+				ActionEvent.CTRL_MASK));
+		menuFile.add(menuItemExit);
 		menuItemExit.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int selectedOption = JOptionPane.showConfirmDialog(null, "Do you still want to exit?", "Exit", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				int selectedOption = JOptionPane.showConfirmDialog(null,
+						"Do you still want to exit?", "Exit",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE);
 				if (selectedOption == JOptionPane.YES_OPTION) {
-				System.exit(0);
-				}
-				else {
+					System.exit(0);
+				} else {
 					return;
 				}
-				
+
 			}
-			
+
 		});
-		
-		//MainMenu 
+
+		// MainMenu
 		JMenu menuEdit = new JMenu("Edit");
 		menuEdit.setMnemonic(KeyEvent.VK_A);
 		menuEdit.getAccessibleContext().setAccessibleDescription("File");
 		mainMenuBar.add(menuEdit);
-		
-		//Group of JMenuItems
-		//New Product
+
+		// Group of JMenuItems
+		// New Product
 		JMenuItem menuItemEdit = new JMenuItem("Update");
-		menuItemEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+		menuItemEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+				ActionEvent.CTRL_MASK));
 		menuEdit.add(menuItemEdit);
-		
-		//Delete
+
+		// Delete
 		menuItemDelete = new JMenuItem("Delete");
-		menuItemDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.CTRL_MASK));
+		menuItemDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
+				ActionEvent.CTRL_MASK));
 		menuEdit.add(menuItemDelete);
 		menuItemDelete.addActionListener(this);
-	/*	menuItemDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-					
-				int checkSelected = ProductList.getSelectedRow();
-				System.out.println("Selected Row: " + checkSelected);
-				//row needs to be selected
-				if (checkSelected < 0 ) {
-					JOptionPane.showMessageDialog(null, GUI.this, "You must select a product" , JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				
-				int selectedOption = JOptionPane.showConfirmDialog(null, "Do you want to delete this?", "Deletion", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-				if (selectedOption == JOptionPane.YES_OPTION) {
-				int[] row_index = ProductList.getSelectedRows();
-				
-				
-				
-				for (int i : row_index) {
-				Product product = (Product) ProductList.getValueAt(i , ProductTable.Object_Col);
-				
-				int rowId = product.getProductID();
-				
-				System.out.println( i + " Delete" );
-				IMSConnector.deleteProductQty(rowId);
-				System.out.println("ID" + rowId );
-				//System.out.println(product.getProductQty());
-				
-				}
-				
-				arrayListupdate();
-				
-			} else {
-				return;
-			}
-		}
-		});
-		*/
-	
-		//MainMenu  - Help
+		/*
+		 * menuItemDelete.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) {
+		 * 
+		 * int checkSelected = ProductList.getSelectedRow();
+		 * System.out.println("Selected Row: " + checkSelected); //row needs to
+		 * be selected if (checkSelected < 0 ) {
+		 * JOptionPane.showMessageDialog(null, GUI.this,
+		 * "You must select a product" , JOptionPane.ERROR_MESSAGE); return; }
+		 * 
+		 * int selectedOption = JOptionPane.showConfirmDialog(null,
+		 * "Do you want to delete this?", "Deletion", JOptionPane.YES_NO_OPTION,
+		 * JOptionPane.INFORMATION_MESSAGE); if (selectedOption ==
+		 * JOptionPane.YES_OPTION) { int[] row_index =
+		 * ProductList.getSelectedRows();
+		 * 
+		 * 
+		 * 
+		 * for (int i : row_index) { Product product = (Product)
+		 * ProductList.getValueAt(i , ProductTable.Object_Col);
+		 * 
+		 * int rowId = product.getProductID();
+		 * 
+		 * System.out.println( i + " Delete" );
+		 * IMSConnector.deleteProductQty(rowId); System.out.println("ID" + rowId
+		 * ); //System.out.println(product.getProductQty());
+		 * 
+		 * }
+		 * 
+		 * arrayListupdate();
+		 * 
+		 * } else { return; } } });
+		 */
+
+		// MainMenu - Help
 		JMenu menuHelp = new JMenu("Help");
 		menuHelp.setMnemonic(KeyEvent.VK_A);
 		menuHelp.getAccessibleContext().setAccessibleDescription("Help");
 		mainMenuBar.add(menuHelp);
-		
-		//Overview
+
+		// Overview
 		JMenuItem menuItemOverview = new JMenuItem("Overview");
-		menuItemOverview.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
-		menuHelp.add(menuItemOverview);	
-		
-		//Key Assist
+		menuItemOverview.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
+				ActionEvent.CTRL_MASK));
+		menuHelp.add(menuItemOverview);
+
+		// Key Assist
 		JMenuItem menuItemKeyAssist = new JMenuItem("Key Assist");
-		menuItemKeyAssist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K, ActionEvent.CTRL_MASK));
-		menuHelp.add(menuItemKeyAssist);		
-		
-		//About
+		menuItemKeyAssist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K,
+				ActionEvent.CTRL_MASK));
+		menuHelp.add(menuItemKeyAssist);
+
+		// About
 		JMenuItem menuItemAbout = new JMenuItem("About");
-		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
-		menuHelp.add(menuItemAbout);			
-		
+		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
+				ActionEvent.CTRL_MASK));
+		menuHelp.add(menuItemAbout);
+
 		minQtyText = new JTextArea();
 		minQtyText.setEditable(false);
 		ProductList = new JTable();
@@ -386,48 +364,46 @@ public class GUI implements ActionListener {
 		JScrollPane minScroll = new JScrollPane(minTable);
 		jScrlP.setBackground(Color.DARK_GRAY);
 		JScrollPane textScroll = new JScrollPane(minQtyText);
-		
-		
+
 		arrayListupdate();
-		
-		
+
 		ProductList.getModel().addTableModelListener(new TableModelListener() {
-			
+
 			@Override
 			public void tableChanged(TableModelEvent e) {
 				System.out.println("Table Change");
-				
+
 				int row = ProductList.getSelectedRow();
 				int col = ProductList.getSelectedColumn();
+
 				
-				
-				//ProductList.putClientProperty("terminateEditOnFocusLost", true);
-				//row needs to be selected
-				
-				if (row < 0 ) {
-					JOptionPane.showMessageDialog(null, GUI.this, "You must select a product" , JOptionPane.ERROR_MESSAGE);
+
+				if (row < 0) {
+					JOptionPane.showMessageDialog(null, GUI.this,
+							"You must select a product",
+							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
-				Product product = (Product) ProductList.getValueAt(row , ProductTable.Object_Col);
-				
+
+				Product product = (Product) ProductList.getValueAt(row,
+						ProductTable.Object_Col);
+
 				String text = updateText.getText();
 				System.out.println(text);
-				
-				
+
 				int i = product.getProductID();
-				
-				switch(col) {
+
+				switch (col) {
 				case 0:
 					String name = product.getProductName();
 					IMSConnector.updateProductName(name, i);
 					break;
-				case 2: 
+				case 2:
 					int q = product.getProductQty();
 					IMSConnector.updateProductQty(q, i);
 					System.out.println("Qty" + product.getProductQty());
 					break;
-				case 3: 
+				case 3:
 					int mQ = product.getProductMinQty();
 					IMSConnector.updateProductMinQty(mQ, i);
 					System.out.println("Qty" + product.getProductMinQty());
@@ -437,59 +413,59 @@ public class GUI implements ActionListener {
 					IMSConnector.updateProductMaxQty(maxQ, i);
 					System.out.println("Qty" + product.getProductMaxQty());
 					break;
-				
-				default: 
-					JOptionPane.showMessageDialog(null, GUI.this, "You must select a product" , JOptionPane.ERROR_MESSAGE);
+
+				default:
+					JOptionPane.showMessageDialog(null, GUI.this,
+							"You must select a product",
+							JOptionPane.ERROR_MESSAGE);
 					break;
-					
+
 				}
-				
-				
+
 				ArrayList<Product> allproducts = new ArrayList<Product>();
 				ArrayList<Product> minProduct = new ArrayList<Product>();
-				
+
 				try {
 					allproducts = IMSConnector.getAllProducts();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-				
-				
+
 				int i2 = 0;
 				for (Product p : allproducts) {
 
-					if (p.getProductMinQty() > p.getProductQty()) {	
-					minProduct.add(i2, p);
-					System.out.println(i2);
-					System.out.println(p);
-					i2++;
-						
+					if (p.getProductMinQty() > p.getProductQty()) {
+						minProduct.add(i2, p);
+						System.out.println(i2);
+						System.out.println(p);
+						i2++;
+
 					}
-				
+
 				}
 				System.out.println("Finish");
 				minModel = new ProductTable(minProduct);
 				minTable.setModel(minModel);
-			
+
 			}
 		});
-		
+
 		minTable.getModel().addTableModelListener(new TableModelListener() {
-				
-				@Override
-				public void tableChanged(TableModelEvent e) {
-					ProductList.getSelectionModel().clearSelection();
-					ProductList.getCellEditor();
+
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				ProductList.getSelectionModel().clearSelection();
+				ProductList.getCellEditor();
 			}
 		});
-		
+
 		ProductList.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				
+
 				int row = ProductList.getSelectedRow();
-				Product product = (Product) ProductList.getValueAt(row , ProductTable.Object_Col);
+				Product product = (Product) ProductList.getValueAt(row,
+						ProductTable.Object_Col);
 				String productName = product.getProductName();
 				String productID = Integer.toString(product.getProductID());
 				String productQty = Integer.toString(product.getProductQty());
@@ -502,7 +478,7 @@ public class GUI implements ActionListener {
 				} else {
 					porousWare = "No";
 				}
-				
+
 				tProductName.setText(null);
 				tProductName.insert(productName, 0);
 				tProductId.setText(null);
@@ -517,13 +493,11 @@ public class GUI implements ActionListener {
 				tPrice.setText(price);
 				tPorousware.setText(null);
 				tPorousware.setText(porousWare);
-				
+
 			}
-			
+
 		});
-		
-		
-		
+
 		sideFormPanel.add(lProductName);
 		sideFormPanel.add(tProductName);
 		sideFormPanel.add(lProductId);
@@ -538,29 +512,31 @@ public class GUI implements ActionListener {
 		sideFormPanel.add(tMaxQty);
 		sideFormPanel.add(lPorousware);
 		sideFormPanel.add(tPorousware);
-		
-		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, sideFormPanel, minScroll );
-		
+
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+				sideFormPanel, minScroll);
+
 		topPanel.add(bAdd);
 		topPanel.add(bDelete);
 		topPanel.add(bStockReport);
 		topPanel.add(bProductOrder);
 		topPanel.setBackground(Color.DARK_GRAY);
 		sidePanel.add(splitPane);
-		sidePanel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 3)));;
+		sidePanel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 3)));
+		;
 		outerPanel.add(topPanel, BorderLayout.NORTH);
 		outerPanel.add(jScrlP, BorderLayout.CENTER);
 		outerPanel.add(bottomPanel, BorderLayout.SOUTH);
 		outerPanel.add(sidePanel, BorderLayout.LINE_END);
 		outerPanel.setBackground(Color.GRAY);
-		
+
 		ProductList.setGridColor(Color.BLACK);
-		ProductList.setIntercellSpacing(new Dimension( 1,1));
+		ProductList.setIntercellSpacing(new Dimension(1, 1));
 		ProductList.setShowGrid(true);
 		mainframe.add(outerPanel);
-		
+
 		mainframe.setJMenuBar(mainMenuBar);
-		
+
 		try {
 			mainframe.setIconImage(ImageIO.read(new File("NBG.png")));
 		} catch (IOException e1) {
@@ -568,7 +544,8 @@ public class GUI implements ActionListener {
 			e1.printStackTrace();
 		}
 		try {
-			mainframe.setIconImage(ImageIO.read(new File("/home/developer/InventoryManagementSystemMW/NBG.png")));
+			mainframe.setIconImage(ImageIO.read(new File(
+					"/home/developer/InventoryManagementSystemMW/NBG.png")));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -577,47 +554,45 @@ public class GUI implements ActionListener {
 		mainframe.getContentPane().setBackground(Color.BLACK);
 		mainframe.pack();
 		mainframe.setVisible(true);
-		
+
 	}
-	
+
 	public void arrayListupdate() {
 		try {
-			//String ProductName = searchText.getText();
+			// String ProductName = searchText.getText();
 			// System.out.println("Searched For" + ProductName);
 			System.out.println("Start Array List Update");
 			ProductList.getSelectionModel().clearSelection();
 			ProductList.getCellEditor();
-			
-			
+
 			ArrayList<Product> product2 = new ArrayList<Product>();
 			ArrayList<Product> minProduct = new ArrayList<Product>();
 			product2 = IMSConnector.getAllProducts();
-			
+
 			model = new ProductTable(product2);
-			
+
 			ProductList.setModel(model);
 			System.out.println("outside loop");
 			int i = 0;
-			
+
 			for (Product p : product2) {
 
-				if (p.getProductMinQty() > p.getProductQty()) {	
-				minProduct.add(i, p);
-				System.out.println(i);
-				System.out.println(p);
-				i++;
-					
+				if (p.getProductMinQty() > p.getProductQty()) {
+					minProduct.add(i, p);
+					System.out.println(i);
+					System.out.println(p);
+					i++;
+
 				}
-			
+
 			}
 			System.out.println("Finish");
 			minModel = new ProductTable(minProduct);
 			minTable.setModel(minModel);
-			
+
 			minTable.getSelectionModel().clearSelection();
 			minTable.getCellEditor();
-			
-			
+
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -625,110 +600,129 @@ public class GUI implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		arrayListupdate();
-		
-		if(e.getSource() == menuItemNew || e.getSource() == bAdd) {
+
+		if (e.getSource() == menuItemNew || e.getSource() == bAdd) {
 			String name;
 			int Qty = 0;
 			int MinQty;
 			int MaxQty;
 			float Price;
 			int Porousware;
-			
+
 			Boolean Check = null;
-		try {
-				
-			name = JOptionPane.showInputDialog(null, "Enter Product Name: " , null);
-			if (name != null ) {
-				
-			Qty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Product Qty: " , null));
-			MinQty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Minimum Stock Allowed: " , null));
-			MaxQty = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter Maximum Stock: " , null));
-			Price = Float.parseFloat(JOptionPane.showInputDialog(null, "Enter Price: " , null));
-			Porousware = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter if Poroursware is available (0 or 1) : " , null));
-			
-			IMSConnector.addProduct(name, Qty, MinQty, MaxQty, Price, Porousware);
-			arrayListupdate();
+			try {
+
+				name = JOptionPane.showInputDialog(null,
+						"Enter Product Name: ", null);
+				if (name != null) {
+
+					Qty = Integer.parseInt(JOptionPane.showInputDialog(null,
+							"Enter Product Qty: ", null));
+					MinQty = Integer.parseInt(JOptionPane.showInputDialog(null,
+							"Enter Minimum Stock Allowed: ", null));
+					MaxQty = Integer.parseInt(JOptionPane.showInputDialog(null,
+							"Enter Maximum Stock: ", null));
+					Price = Float.parseFloat(JOptionPane.showInputDialog(null,
+							"Enter Price: ", null));
+					Porousware = Integer.parseInt(JOptionPane.showInputDialog(
+							null,
+							"Enter if Poroursware is available (0 or 1) : ",
+							null));
+
+					IMSConnector.addProduct(name, Qty, MinQty, MaxQty, Price,
+							Porousware);
+					arrayListupdate();
+				}
+
+			} catch (NumberFormatException nfe) {
+				JOptionPane.showMessageDialog(null, "Input must be a number");
+
 			}
-			
-		} catch (NumberFormatException nfe) {
-			JOptionPane.showMessageDialog(null, "Input must be a number");
-		
 		}
-		}
-		
-		
-		if(e.getSource() == menuItemDelete || e.getSource() == bDelete) {
+
+		if (e.getSource() == menuItemDelete || e.getSource() == bDelete) {
 			int checkSelected = ProductList.getSelectedRow();
 			System.out.println("Selected Row: " + checkSelected);
-			//row needs to be selected
-			if (checkSelected < 0 ) {
-				JOptionPane.showMessageDialog(null, GUI.this, "You must select a product" , JOptionPane.ERROR_MESSAGE);
+			// row needs to be selected
+			if (checkSelected < 0) {
+				JOptionPane.showMessageDialog(null, GUI.this,
+						"You must select a product", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			
-			int selectedOption = JOptionPane.showConfirmDialog(null, "Do you want to delete this?", "Deletion", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+			int selectedOption = JOptionPane.showConfirmDialog(null,
+					"Do you want to delete this?", "Deletion",
+					JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (selectedOption == JOptionPane.YES_OPTION) {
-			int[] row_index = ProductList.getSelectedRows();
-			
-			
-			
-			for (int i : row_index) {
-			Product product = (Product) ProductList.getValueAt(i , ProductTable.Object_Col);
-			
-			int rowId = product.getProductID();
-			
-			System.out.println( i + " Delete" );
-			IMSConnector.deleteProductQty(rowId);
-			System.out.println("ID" + rowId );
-			//System.out.println(product.getProductQty());
-			
-			}
-			
-		} else {
-			return;
-		}
-		}
-		
-		if(e.getSource() == printStockReport || e.getSource() == bStockReport) {
-			DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			Date date = new Date();
-			FileWriter writer ;
-			ArrayList<Product> allproducts = new ArrayList<Product>();
-			
-			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure you want to print?", "Stock Report", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-			if (selectedOption == JOptionPane.YES_OPTION) {
-			try {
-				allproducts = IMSConnector.getAllProducts();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			try {
-				writer = new FileWriter("output.txt");
-				writer.write(String.format("%20s %20s %20s %20s \r\n", "Product ID", "Product Name","Product Qty", dateformat.format(date)));
-			//Print out all products in array list and writes to txt file
-			for (Product p : allproducts) {
-				System.out.println(p.toString());
-				writer.write(String.format("%20s %20s %20s \r\n", String.valueOf(p.getProductID()), p.getProductName(),String.valueOf(p.getProductQty())));  
+				int[] row_index = ProductList.getSelectedRows();
+
+				for (int i : row_index) {
+					Product product = (Product) ProductList.getValueAt(i,
+							ProductTable.Object_Col);
+
+					int rowId = product.getProductID();
+
+					System.out.println(i + " Delete");
+					IMSConnector.deleteProductQty(rowId);
+					System.out.println("ID" + rowId);
+					// System.out.println(product.getProductQty());
+
 				}
-			writer.close();
-			} catch (Exception exc) {
-				exc.printStackTrace();
-			}
-	
-			JOptionPane.showMessageDialog(null, "Stock report printed. ");
+
 			} else {
 				return;
 			}
-			
 		}
-		
-		if(e.getSource() == bProductOrder || e.getSource() == printProductOrder) {
+
+		if (e.getSource() == printStockReport || e.getSource() == bStockReport) {
 			DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date();
-			FileWriter writer ;	
+			FileWriter writer;
+			ArrayList<Product> allproducts = new ArrayList<Product>();
+
+			int selectedOption = JOptionPane.showConfirmDialog(null,
+					"Are you sure you want to print?", "Stock Report",
+					JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			if (selectedOption == JOptionPane.YES_OPTION) {
+				try {
+					allproducts = IMSConnector.getAllProducts();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					writer = new FileWriter("output.txt");
+					writer.write(String.format("%20s %20s %20s %20s \r\n",
+							"Product ID", "Product Name", "Product Qty",
+							dateformat.format(date)));
+					// Print out all products in array list and writes to txt
+					// file
+					for (Product p : allproducts) {
+						System.out.println(p.toString());
+						writer.write(String.format("%20s %20s %20s \r\n",
+								String.valueOf(p.getProductID()),
+								p.getProductName(),
+								String.valueOf(p.getProductQty())));
+					}
+					writer.close();
+				} catch (Exception exc) {
+					exc.printStackTrace();
+				}
+
+				JOptionPane.showMessageDialog(null, "Stock report printed. ");
+			} else {
+				return;
+			}
+
+		}
+
+		if (e.getSource() == bProductOrder
+				|| e.getSource() == printProductOrder) {
+			DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			FileWriter writer;
 			ArrayList<Product> allproducts = new ArrayList<Product>();
 			try {
 				allproducts = IMSConnector.getAllProducts();
@@ -736,28 +730,33 @@ public class GUI implements ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
-			
-			
+
 			try {
 				writer = new FileWriter("ProductOrder.txt");
-				writer.write(String.format("%20s %20s %20s %20s %20s \r\n", "Product ID", "Product Name","Product Qty", "To Buy", dateformat.format(date)));
-			//Print out all products in array list and writes to txt file
-			for (Product p : allproducts) {
-				
-				if (p.getProductMinQty() > p.getProductQty()) {	
-				
-				System.out.println(p.toString());
-				writer.write(String.format("%20s %20s %20s %20s \r\n", String.valueOf(p.getProductID()), p.getProductName(),String.valueOf(p.getProductQty()), String.valueOf((p.getProductMaxQty() - p.getProductQty()))));
+				writer.write(String.format("%20s %20s %20s %20s %20s \r\n",
+						"Product ID", "Product Name", "Product Qty", "To Buy",
+						dateformat.format(date)));
+				// Print out all products in array list and writes to txt file
+				for (Product p : allproducts) {
+
+					if (p.getProductMinQty() > p.getProductQty()) {
+
+						System.out.println(p.toString());
+						writer.write(String.format("%20s %20s %20s %20s \r\n",
+								String.valueOf(p.getProductID()), p
+										.getProductName(), String.valueOf(p
+										.getProductQty()),
+								String.valueOf((p.getProductMaxQty() - p
+										.getProductQty()))));
+					}
 				}
-				}
-			writer.close();
+				writer.close();
 			} catch (Exception exc) {
 				exc.printStackTrace();
 			}
-			JOptionPane.showMessageDialog(null, "Product Order created. " );
+			JOptionPane.showMessageDialog(null, "Product Order created. ");
 		}
-		
+
 	}
-	
+
 }
