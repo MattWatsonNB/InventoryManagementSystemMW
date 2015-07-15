@@ -106,19 +106,15 @@ public class GUI implements ActionListener {
 		ImageIcon productOrderIcon = null;
 		
 		String addIconLocation = "Images/plus-round.png";
-		String addLinuxLocation = "/home/developer/InventoryManagementSystemMW/Images/plus-round.png";
 		
 		String deleteIconLocation = "Images/close-round.png";
-		String deleteLinuxLocation = "/home/developer/InventoryManagementSystemMW/Images/close-round.png";
 		
 		String printIconLocation = "Images/clipboard.png";
-		String printLinuxLocation = "/home/developer/InventoryManagementSystemMW/Images/clipboard.png";
 		
 		String productOrderLocation = "Images/cart.png";
-		String productOrderLinux = "/home/developer/InventoryManagementSystemMW/Images/cart.png";
 		
 		try { 
-			addIcon = new ImageIcon(addLinuxLocation);
+			addIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/plus-round.png");
 		} catch(Exception e) {
 			
 		}
@@ -130,7 +126,7 @@ public class GUI implements ActionListener {
 		}
 		
 		try {
-			deleteIcon = new ImageIcon(deleteLinuxLocation);
+			deleteIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/close-round.png");
 		} catch (Exception e) {
 			
 		}
@@ -142,7 +138,7 @@ public class GUI implements ActionListener {
 		}
 		
 		try {
-			printIcon = new ImageIcon(printLinuxLocation);
+			printIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/clipboard.png");
 		} catch (Exception e) {
 			
 		}
@@ -153,7 +149,7 @@ public class GUI implements ActionListener {
 		}
 		
 		try {
-			productOrderIcon = new ImageIcon(productOrderLinux);
+			productOrderIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/cart.png");
 		} catch (Exception e) {
 			
 		}
