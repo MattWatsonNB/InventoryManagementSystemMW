@@ -208,49 +208,49 @@ public class GUI implements ActionListener {
 
 		});
 
-		// MainMenu
-		JMenu menuEdit = new JMenu("Edit");
-		menuEdit.setMnemonic(KeyEvent.VK_A);
-		menuEdit.getAccessibleContext().setAccessibleDescription("File");
-		mainMenuBar.add(menuEdit);
+//		// MainMenu
+//		JMenu menuEdit = new JMenu("Edit");
+//		menuEdit.setMnemonic(KeyEvent.VK_A);
+//		menuEdit.getAccessibleContext().setAccessibleDescription("File");
+//		mainMenuBar.add(menuEdit);
 
-		// Group of JMenuItems
-		// New Product
-		JMenuItem menuItemEdit = new JMenuItem("Update");
-		menuItemEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
-				ActionEvent.CTRL_MASK));
-		menuEdit.add(menuItemEdit);
+//		// Group of JMenuItems
+//		// New Product
+//		JMenuItem menuItemEdit = new JMenuItem("Update");
+//		menuItemEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+//				ActionEvent.CTRL_MASK));
+//		menuEdit.add(menuItemEdit);
 
-		// Delete
-		menuItemDelete = new JMenuItem("Delete");
-		menuItemDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
-				ActionEvent.CTRL_MASK));
-		menuEdit.add(menuItemDelete);
-		menuItemDelete.addActionListener(this);
-		
-		// MainMenu - Help
-		JMenu menuHelp = new JMenu("Help");
-		menuHelp.setMnemonic(KeyEvent.VK_A);
-		menuHelp.getAccessibleContext().setAccessibleDescription("Help");
-		mainMenuBar.add(menuHelp);
-
-		// Overview
-		JMenuItem menuItemOverview = new JMenuItem("Overview");
-		menuItemOverview.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
-				ActionEvent.CTRL_MASK));
-		menuHelp.add(menuItemOverview);
-
-		// Key Assist
-		JMenuItem menuItemKeyAssist = new JMenuItem("Key Assist");
-		menuItemKeyAssist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K,
-				ActionEvent.CTRL_MASK));
-		menuHelp.add(menuItemKeyAssist);
-
-		// About
-		JMenuItem menuItemAbout = new JMenuItem("About");
-		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
-				ActionEvent.CTRL_MASK));
-		menuHelp.add(menuItemAbout);
+//		// Delete
+//		menuItemDelete = new JMenuItem("Delete");
+//		menuItemDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
+//				ActionEvent.CTRL_MASK));
+//		menuEdit.add(menuItemDelete);
+//		menuItemDelete.addActionListener(this);
+//		
+//		// MainMenu - Help
+//		JMenu menuHelp = new JMenu("Help");
+//		menuHelp.setMnemonic(KeyEvent.VK_A);
+//		menuHelp.getAccessibleContext().setAccessibleDescription("Help");
+//		mainMenuBar.add(menuHelp);
+//
+//		// Overview
+//		JMenuItem menuItemOverview = new JMenuItem("Overview");
+//		menuItemOverview.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
+//				ActionEvent.CTRL_MASK));
+//		menuHelp.add(menuItemOverview);
+//
+//		// Key Assist
+//		JMenuItem menuItemKeyAssist = new JMenuItem("Key Assist");
+//		menuItemKeyAssist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K,
+//				ActionEvent.CTRL_MASK));
+//		menuHelp.add(menuItemKeyAssist);
+//
+//		// About
+//		JMenuItem menuItemAbout = new JMenuItem("About");
+//		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
+//				ActionEvent.CTRL_MASK));
+//		menuHelp.add(menuItemAbout);
 
 		minQtyText = new JTextArea();
 		minQtyText.setEditable(false);
@@ -419,7 +419,7 @@ public class GUI implements ActionListener {
 				sideFormPanel, minScroll);
 
 		topPanel.add(bAdd);
-		topPanel.add(bDelete);
+		
 		topPanel.add(bStockReport);
 		topPanel.add(bProductOrder);
 		topPanel.setBackground(Color.DARK_GRAY);
@@ -572,7 +572,8 @@ public class GUI implements ActionListener {
 			}
 		}
 
-		if (e.getSource() == printStockReport || e.getSource() == bStockReport) {
+		if (e.getSource() == bProductOrder
+				|| e.getSource() == printProductOrder) {
 			DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date();
 			FileWriter writer;
@@ -607,15 +608,14 @@ public class GUI implements ActionListener {
 					exc.printStackTrace();
 				}
 
-				JOptionPane.showMessageDialog(null, "Stock report printed. ");
+				JOptionPane.showMessageDialog(null, "Product order printed. ");
 			} else {
 				return;
 			}
 
 		}
 
-		if (e.getSource() == bProductOrder
-				|| e.getSource() == printProductOrder) {
+		if (e.getSource() == printStockReport || e.getSource() == bStockReport) {
 			
 			FileWriter writer;
 			ArrayList<Product> allproducts = new ArrayList<Product>();
@@ -650,14 +650,10 @@ public class GUI implements ActionListener {
 				writer.close();
 				*/
 				
-				String Title = "Product Order";
+				String Title = "Stock Report";
 				final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				final InputStream inputTemplateStream = new FileInputStream(templatePath);
 				ITemplateDocument doc = Configuration.factory().open(inputTemplateStream, "docx", baos);
-				
-				
-				
-				
 				
 				doc.templater().replace("DATE", dateTime());
 				doc.templater().replace("myArr", setTemplateArray(allproducts));
@@ -677,7 +673,7 @@ public class GUI implements ActionListener {
 			} catch (Exception exc) {
 				exc.printStackTrace();
 			}
-			JOptionPane.showMessageDialog(null, "Product Order created. ");
+			JOptionPane.showMessageDialog(null, "Stock Report created. ");
 		}
 
 	}
@@ -695,6 +691,7 @@ public class GUI implements ActionListener {
 	private String[][] setTemplateArray(ArrayList<Product> Products) {
 		
 		String[][] arrayReturn = new String[Products.size() + 1][7];
+		String Porousware;
 		
 		//Title of each column 
 		arrayReturn[0][0] = "Product Name";
@@ -706,13 +703,21 @@ public class GUI implements ActionListener {
 		arrayReturn[0][6] = "Porousware";
 		
 		for (int i = 0; i <  Products.size(); i++ ) {
+			
+			if (Products.get(i).getPorouswareAvailable() == 1) {
+				 Porousware = "Yes";
+					
+			} else {
+				Porousware = "No";
+			}
+			
 			arrayReturn[i + 1][0] = Products.get(i).getProductName();
 			arrayReturn[i + 1][1] = Integer.toString(Products.get(i).getProductID());
 			arrayReturn[i + 1][2] = Integer.toString(Products.get(i).getProductQty());
 			arrayReturn[i + 1][3] = Integer.toString(Products.get(i).getProductMinQty());
 			arrayReturn[i + 1][4] = Integer.toString(Products.get(i).getProductMaxQty());
 			arrayReturn[i + 1][5] = Float.toString(Products.get(i).getProductPrice());
-			arrayReturn[i + 1][6] = Integer.toString(Products.get(i).getPorouswareAvailable());
+			arrayReturn[i + 1][6] = Porousware;
 		}
 		
 		
