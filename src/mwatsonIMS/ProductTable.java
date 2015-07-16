@@ -6,6 +6,12 @@ import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * 
+ * @author Matthew Watson
+ *
+ */
+
 public class ProductTable extends AbstractTableModel {
 
 	/**

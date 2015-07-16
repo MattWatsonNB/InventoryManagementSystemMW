@@ -10,12 +10,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * @author Matthew Watson
+ *
+ */
 public class IMSConnector {
 
 	// Create and Declares the url, user and password needed to connect up to
 	// the mySQL database
-	String url = "jdbc:mysql://10.50.15.25:3306/ims";
-	String user = "mwatson";
+	String url = "jdbc:mysql://localhost:3306/ims";
+	String user = "root";
 	String password = "netbuilder1:";
 
 	// Initial connection will be null
@@ -349,6 +353,14 @@ public class IMSConnector {
 		// System.out.println("Goodbye");
 	}
 
+	/**
+	 * @param Name
+	 * @param Qty
+	 * @param MinQty
+	 * @param MaxQty
+	 * @param productPrice
+	 * @param porousware
+	 */
 	public void addProduct(String Name, int Qty, int MinQty, int MaxQty,
 			float productPrice, int porousware) {
 		PreparedStatement myStmt = null;

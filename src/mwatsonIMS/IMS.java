@@ -9,6 +9,12 @@ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * 
+ * @author Matthew Watson
+ *
+ */
+
 public class IMS {
 
 	ArrayList<Product> allproducts = new ArrayList<Product>();

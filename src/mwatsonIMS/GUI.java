@@ -1,5 +1,8 @@
 package mwatsonIMS;
 
+import hr.ngs.templater.Configuration;
+import hr.ngs.templater.ITemplateDocument;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -33,9 +36,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,7 +51,7 @@ import java.util.Date;
 /**
  * This class is used to create the GUI. This includes all buttons
  * 
- * @author mwatson
+ * @author Matt Watson
  *
  */
 
@@ -63,7 +70,14 @@ public class GUI implements ActionListener {
 			lPorousware;
 	private JTextArea tProductName, tProductId, tPrice, tQty, tMinQty, tMaxQty,
 			tPorousware;
-
+	private final String templatePath = "Template\\Template.docx";
+	private String programDirectory = System.getProperty("user.dir");
+	private String productOrderPath = programDirectory + "\\ProductOrder\\";
+	private String addIconLocation = programDirectory + "\\Images\\plus-round.png";
+	private String deleteIconLocation = programDirectory + "\\Images\\close-round.png"; 
+	private String stockReportLocation = programDirectory + "\\Images\\clipboard.png";
+	private String productOrderLocation = programDirectory + "\\Images\\cart.png";
+	
 	public GUI() {
 
 		try {
@@ -106,18 +120,17 @@ public class GUI implements ActionListener {
 		ImageIcon printIcon = null;
 		ImageIcon productOrderIcon = null;
 
-		final String addIconLocation = "Images/plus-round.png";
-		final String deleteIconLocation = "Images/close-round.png";
-		final String printIconLocation = "Images/clipboard.png";
-		final String productOrderLocation = "Images/cart.png";
-
-		addIcon = new ImageIcon("/home/developer/InventoryManagementSystemMW/Images/plus-round.png");
-		deleteIcon = new ImageIcon(
-				"/home/developer/InventoryManagementSystemMW/Images/close-round.png");
-		printIcon = new ImageIcon(
-				"/home/developer/InventoryManagementSystemMW/Images/clipboard.png");
-		productOrderIcon = new ImageIcon(
-				"/home/developer/InventoryManagementSystemMW/Images/cart.png");
+		//final String addIconLocation = "Images/plus-round.png";
+		//final String deleteIconLocation = "Images/close-round.png";
+		//final String printIconLocation = "Images/clipboard.png";
+		//final String productOrderLocation = "Images/cart.png";
+		// "/home/developer/InventoryManagementSystemMW/Images/plus-round.png"
+		// "/home/developer/InventoryManagementSystemMW/Images/close-round.png"
+		
+		addIcon = new ImageIcon(addIconLocation);
+		deleteIcon = new ImageIcon(deleteIconLocation);
+		printIcon = new ImageIcon(stockReportLocation);
+		productOrderIcon = new ImageIcon(productOrderLocation);
 
 		bAdd = new JButton(addIcon);
 		bAdd.setBackground(Color.gray);
@@ -158,31 +171,7 @@ public class GUI implements ActionListener {
 				ActionEvent.CTRL_MASK));
 		menuFile.add(menuItemNew);
 		menuItemNew.addActionListener(this);
-		/*
-		 * menuItemNew.addActionListener(new ActionListener () { public void
-		 * actionPerformed(ActionEvent e) {
-		 * 
-		 * String name; int Qty = 0; int MinQty; int MaxQty; Boolean Check =
-		 * null; try {
-		 * 
-		 * name = JOptionPane.showInputDialog(null, "Enter Product Name: " ,
-		 * null); if (name != null ) {
-		 * 
-		 * Qty = Integer.parseInt(JOptionPane.showInputDialog(null,
-		 * "Enter Product Qty: " , null)); MinQty =
-		 * Integer.parseInt(JOptionPane.showInputDialog(null,
-		 * "Enter Minimum Stock Allowed: " , null)); MaxQty =
-		 * Integer.parseInt(JOptionPane.showInputDialog(null,
-		 * "Enter Maximum Stock: " , null));
-		 * 
-		 * IMSConnector.addProduct(name, Qty, MinQty, MaxQty);
-		 * arrayListupdate(); }
-		 * 
-		 * } catch (NumberFormatException nfe) {
-		 * JOptionPane.showMessageDialog(null, "Input must be a number");
-		 * 
-		 * } } });
-		 */
+		
 		// Print
 		menuFile.addSeparator();
 		JMenu printSubMenu = new JMenu("Print");
@@ -193,27 +182,7 @@ public class GUI implements ActionListener {
 				ActionEvent.CTRL_MASK));
 		printStockReport.addActionListener(this);
 		printSubMenu.add(printStockReport);
-		/*
-		 * printStockReport.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) {
-		 * 
-		 * DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		 * Date date = new Date(); FileWriter writer ; ArrayList<Product>
-		 * allproducts = new ArrayList<Product>(); try { allproducts =
-		 * IMSConnector.getAllProducts(); } catch (Exception e1) { // TODO
-		 * Auto-generated catch block e1.printStackTrace(); } try { writer = new
-		 * FileWriter("output.txt");
-		 * writer.write(String.format("%20s %20s %20s %20s \r\n", "Product ID",
-		 * "Product Name","Product Qty", dateformat.format(date))); //Print out
-		 * all products in array list and writes to txt file for (Product p :
-		 * allproducts) { System.out.println(p.toString());
-		 * writer.write(String.format("%20s %20s %20s \r\n",
-		 * String.valueOf(p.getProductID()),
-		 * p.getProductName(),String.valueOf(p.getProductQty()))); }
-		 * writer.close(); } catch (Exception exc) { exc.printStackTrace(); }
-		 * 
-		 * JOptionPane.showMessageDialog(null, "Stock report printed. "); } });
-		 */
+		
 
 		printProductOrder = new JMenuItem("Product Order");
 		printProductOrder.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
@@ -221,36 +190,7 @@ public class GUI implements ActionListener {
 		printProductOrder.addActionListener(this);
 		printSubMenu.add(printProductOrder);
 		menuFile.add(printSubMenu);
-		/*
-		 * printProductOrder.addActionListener(new ActionListener () { public
-		 * void actionPerformed(ActionEvent e) {
-		 * 
-		 * DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		 * Date date = new Date(); FileWriter writer ; ArrayList<Product>
-		 * allproducts = new ArrayList<Product>(); try { allproducts =
-		 * IMSConnector.getAllProducts(); } catch (Exception e1) { // TODO
-		 * Auto-generated catch block e1.printStackTrace(); }
-		 * 
-		 * 
-		 * 
-		 * try { writer = new FileWriter("ProductOrder.txt");
-		 * writer.write(String.format("%20s %20s %20s %20s %20s \r\n",
-		 * "Product ID", "Product Name","Product Qty", "To Buy",
-		 * dateformat.format(date))); //Print out all products in array list and
-		 * writes to txt file for (Product p : allproducts) {
-		 * 
-		 * if (p.getProductMinQty() > p.getProductQty()) {
-		 * 
-		 * System.out.println(p.toString());
-		 * writer.write(String.format("%20s %20s %20s %20s \r\n",
-		 * String.valueOf(p.getProductID()),
-		 * p.getProductName(),String.valueOf(p.getProductQty()),
-		 * String.valueOf((p.getProductMaxQty() - p.getProductQty())))); } }
-		 * writer.close(); } catch (Exception exc) { exc.printStackTrace(); }
-		 * JOptionPane.showMessageDialog(null, "Product Order created. " ); }
-		 * });
-		 */
-
+		
 		// Exit
 		JMenuItem menuItemExit = new JMenuItem("Exit");
 		menuItemExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
@@ -293,40 +233,7 @@ public class GUI implements ActionListener {
 				ActionEvent.CTRL_MASK));
 		menuEdit.add(menuItemDelete);
 		menuItemDelete.addActionListener(this);
-		/*
-		 * menuItemDelete.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) {
-		 * 
-		 * int checkSelected = ProductList.getSelectedRow();
-		 * System.out.println("Selected Row: " + checkSelected); //row needs to
-		 * be selected if (checkSelected < 0 ) {
-		 * JOptionPane.showMessageDialog(null, GUI.this,
-		 * "You must select a product" , JOptionPane.ERROR_MESSAGE); return; }
-		 * 
-		 * int selectedOption = JOptionPane.showConfirmDialog(null,
-		 * "Do you want to delete this?", "Deletion", JOptionPane.YES_NO_OPTION,
-		 * JOptionPane.INFORMATION_MESSAGE); if (selectedOption ==
-		 * JOptionPane.YES_OPTION) { int[] row_index =
-		 * ProductList.getSelectedRows();
-		 * 
-		 * 
-		 * 
-		 * for (int i : row_index) { Product product = (Product)
-		 * ProductList.getValueAt(i , ProductTable.Object_Col);
-		 * 
-		 * int rowId = product.getProductID();
-		 * 
-		 * System.out.println( i + " Delete" );
-		 * IMSConnector.deleteProductQty(rowId); System.out.println("ID" + rowId
-		 * ); //System.out.println(product.getProductQty());
-		 * 
-		 * }
-		 * 
-		 * arrayListupdate();
-		 * 
-		 * } else { return; } } });
-		 */
-
+		
 		// MainMenu - Help
 		JMenu menuHelp = new JMenu("Help");
 		menuHelp.setMnemonic(KeyEvent.VK_A);
@@ -461,6 +368,7 @@ public class GUI implements ActionListener {
 		});
 
 		ProductList.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 
 				int row = ProductList.getSelectedRow();
@@ -720,8 +628,7 @@ public class GUI implements ActionListener {
 
 		if (e.getSource() == bProductOrder
 				|| e.getSource() == printProductOrder) {
-			DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			Date date = new Date();
+			
 			FileWriter writer;
 			ArrayList<Product> allproducts = new ArrayList<Product>();
 			try {
@@ -732,7 +639,9 @@ public class GUI implements ActionListener {
 			}
 
 			try {
-				writer = new FileWriter("ProductOrder.txt");
+				/*
+				  writer = new FileWriter("ProductOrder.txt");
+				 
 				writer.write(String.format("%20s %20s %20s %20s %20s \r\n",
 						"Product ID", "Product Name", "Product Qty", "To Buy",
 						dateformat.format(date)));
@@ -751,6 +660,27 @@ public class GUI implements ActionListener {
 					}
 				}
 				writer.close();
+				*/
+				
+				String Title = "Product Order";
+				final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				final InputStream inputTemplateStream = new FileInputStream(templatePath);
+				ITemplateDocument doc = Configuration.factory().open(inputTemplateStream, "docx", baos);
+				
+				doc.templater().replace("DATE", dateTime());
+				doc.templater().replace("myArr", allproducts);
+				
+				doc.flush();
+				
+				byte[] results = baos.toByteArray();
+				String date = dateTime();
+				String dateTimeString = date.replace('/', '-');
+				String productOrderPathTemp = productOrderPath.replace('\\','/');
+				FileOutputStream fos = new FileOutputStream(String.format(productOrderPathTemp + "%s (%s).docx", Title, dateTimeString ));
+				fos.write(results);
+				fos.close();
+				
+				
 			} catch (Exception exc) {
 				exc.printStackTrace();
 			}
@@ -758,5 +688,16 @@ public class GUI implements ActionListener {
 		}
 
 	}
+	
+	private String dateTime() {
+		
+		String dateTime;
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+		Date date = new Date();
+		dateTime = dateFormat.format(date);
+		return dateTime;
+		
+	}
+	
 
 }
