@@ -716,7 +716,7 @@ public class GUI implements ActionListener {
 		}
 		
 		
-		
+		//Array
 		return arrayReturn;
 		
 	}
