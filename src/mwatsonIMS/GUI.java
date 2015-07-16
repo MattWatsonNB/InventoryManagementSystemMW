@@ -77,6 +77,7 @@ public class GUI implements ActionListener {
 	private String deleteIconLocation = programDirectory + "\\Images\\close-round.png"; 
 	private String stockReportLocation = programDirectory + "\\Images\\clipboard.png";
 	private String productOrderLocation = programDirectory + "\\Images\\cart.png";
+	private String nBGLocation = programDirectory + "\\Images\\NBG.png";
 	
 	public GUI() {
 
@@ -119,13 +120,6 @@ public class GUI implements ActionListener {
 		ImageIcon deleteIcon = null;
 		ImageIcon printIcon = null;
 		ImageIcon productOrderIcon = null;
-
-		//final String addIconLocation = "Images/plus-round.png";
-		//final String deleteIconLocation = "Images/close-round.png";
-		//final String printIconLocation = "Images/clipboard.png";
-		//final String productOrderLocation = "Images/cart.png";
-		// "/home/developer/InventoryManagementSystemMW/Images/plus-round.png"
-		// "/home/developer/InventoryManagementSystemMW/Images/close-round.png"
 		
 		addIcon = new ImageIcon(addIconLocation);
 		deleteIcon = new ImageIcon(deleteIconLocation);
@@ -446,18 +440,12 @@ public class GUI implements ActionListener {
 		mainframe.setJMenuBar(mainMenuBar);
 
 		try {
-			mainframe.setIconImage(ImageIO.read(new File("NBG.png")));
+			mainframe.setIconImage(ImageIO.read(new File(nBGLocation)));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		try {
-			mainframe.setIconImage(ImageIO.read(new File(
-					"/home/developer/InventoryManagementSystemMW/NBG.png")));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	
 		mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainframe.getContentPane().setBackground(Color.BLACK);
 		mainframe.pack();
@@ -667,8 +655,13 @@ public class GUI implements ActionListener {
 				final InputStream inputTemplateStream = new FileInputStream(templatePath);
 				ITemplateDocument doc = Configuration.factory().open(inputTemplateStream, "docx", baos);
 				
+				
+				
+				
+				
 				doc.templater().replace("DATE", dateTime());
-				doc.templater().replace("myArr", allproducts);
+				doc.templater().replace("myArr", setTemplateArray(allproducts));
+				doc.templater().replace("Title", Title);
 				
 				doc.flush();
 				
@@ -696,6 +689,35 @@ public class GUI implements ActionListener {
 		Date date = new Date();
 		dateTime = dateFormat.format(date);
 		return dateTime;
+		
+	}
+	
+	private String[][] setTemplateArray(ArrayList<Product> Products) {
+		
+		String[][] arrayReturn = new String[Products.size() + 1][7];
+		
+		//Title of each column 
+		arrayReturn[0][0] = "Product Name";
+		arrayReturn[0][1] = "ID";
+		arrayReturn[0][2] = "Qty";
+		arrayReturn[0][3] = "Min Qty";
+		arrayReturn[0][4] = "Max Qty";
+		arrayReturn[0][5] = "Price";
+		arrayReturn[0][6] = "Porousware";
+		
+		for (int i = 0; i <  Products.size(); i++ ) {
+			arrayReturn[i + 1][0] = Products.get(i).getProductName();
+			arrayReturn[i + 1][1] = Integer.toString(Products.get(i).getProductID());
+			arrayReturn[i + 1][2] = Integer.toString(Products.get(i).getProductQty());
+			arrayReturn[i + 1][3] = Integer.toString(Products.get(i).getProductMinQty());
+			arrayReturn[i + 1][4] = Integer.toString(Products.get(i).getProductMaxQty());
+			arrayReturn[i + 1][5] = Float.toString(Products.get(i).getProductPrice());
+			arrayReturn[i + 1][6] = Integer.toString(Products.get(i).getPorouswareAvailable());
+		}
+		
+		
+		
+		return arrayReturn;
 		
 	}
 	
