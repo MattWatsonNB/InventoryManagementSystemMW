@@ -208,50 +208,6 @@ public class GUI implements ActionListener {
 
 		});
 
-//		// MainMenu
-//		JMenu menuEdit = new JMenu("Edit");
-//		menuEdit.setMnemonic(KeyEvent.VK_A);
-//		menuEdit.getAccessibleContext().setAccessibleDescription("File");
-//		mainMenuBar.add(menuEdit);
-
-//		// Group of JMenuItems
-//		// New Product
-//		JMenuItem menuItemEdit = new JMenuItem("Update");
-//		menuItemEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
-//				ActionEvent.CTRL_MASK));
-//		menuEdit.add(menuItemEdit);
-
-//		// Delete
-//		menuItemDelete = new JMenuItem("Delete");
-//		menuItemDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
-//				ActionEvent.CTRL_MASK));
-//		menuEdit.add(menuItemDelete);
-//		menuItemDelete.addActionListener(this);
-//		
-//		// MainMenu - Help
-//		JMenu menuHelp = new JMenu("Help");
-//		menuHelp.setMnemonic(KeyEvent.VK_A);
-//		menuHelp.getAccessibleContext().setAccessibleDescription("Help");
-//		mainMenuBar.add(menuHelp);
-//
-//		// Overview
-//		JMenuItem menuItemOverview = new JMenuItem("Overview");
-//		menuItemOverview.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
-//				ActionEvent.CTRL_MASK));
-//		menuHelp.add(menuItemOverview);
-//
-//		// Key Assist
-//		JMenuItem menuItemKeyAssist = new JMenuItem("Key Assist");
-//		menuItemKeyAssist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K,
-//				ActionEvent.CTRL_MASK));
-//		menuHelp.add(menuItemKeyAssist);
-//
-//		// About
-//		JMenuItem menuItemAbout = new JMenuItem("About");
-//		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
-//				ActionEvent.CTRL_MASK));
-//		menuHelp.add(menuItemAbout);
-
 		minQtyText = new JTextArea();
 		minQtyText.setEditable(false);
 		ProductList = new JTable();
@@ -627,29 +583,7 @@ public class GUI implements ActionListener {
 			}
 
 			try {
-				/*
-				  writer = new FileWriter("ProductOrder.txt");
-				 
-				writer.write(String.format("%20s %20s %20s %20s %20s \r\n",
-						"Product ID", "Product Name", "Product Qty", "To Buy",
-						dateformat.format(date)));
-				// Print out all products in array list and writes to txt file
-				for (Product p : allproducts) {
-
-					if (p.getProductMinQty() > p.getProductQty()) {
-
-						System.out.println(p.toString());
-						writer.write(String.format("%20s %20s %20s %20s \r\n",
-								String.valueOf(p.getProductID()), p
-										.getProductName(), String.valueOf(p
-										.getProductQty()),
-								String.valueOf((p.getProductMaxQty() - p
-										.getProductQty()))));
-					}
-				}
-				writer.close();
-				*/
-				
+								
 				String Title = "Stock Report";
 				final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				final InputStream inputTemplateStream = new FileInputStream(templatePath);
